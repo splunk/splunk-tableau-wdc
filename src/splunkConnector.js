@@ -87,21 +87,22 @@ $('button[name="sh-next"]').click(function(){
 
 (function () {
 
-    var isPaused  = false;
-    var cols      = [];
-    var res       = null;
-    // Create the connector object
-    var myConnector = tableau.makeConnector();
 
-    // Search everything and return the first 10 results
-    var searchQuery = "search index=main | head 10 | table host, source, sourcetype, _time";
+  var isPaused  = false;
+  var cols      = [];
+  var res       = null;
+  // Create the connector object
+  var myConnector = tableau.makeConnector();
 
-    // Set the search parameters--specify a time range
-    var searchParams = {
-       output_mode: "JSON",
-       earliest_time: "-24h@h",
-       latest_time: "now"
-    };
+  // Search everything and return the first 10 results
+  var searchQuery = "search index=main | head 10 | table host, source, sourcetype, _time";
+
+  // Set the search parameters--specify a time range
+  var searchParams = {
+      output_mode: "JSON",
+      earliest_time: "-24h@h",
+      latest_time: "now"
+  };
 
 
     // Define Variables for Splunk Instance
@@ -160,23 +161,24 @@ $('button[name="sh-next"]').click(function(){
 
     myConnector.getData = function (table, doneCallback) {
       var fetchSplunkData = new Promise(function(resolve,reject){
-      var tableData = []; 
+      var tableData = [];
               console.log(res); //
               for (var i=0; i<res.length; ++i) {
                   console.log('this should execute');
                   isPaused = false;
                   tableData.push(res[i]);
               }
-              resolve(tableData); 
-            }); 
+              resolve(tableData);
+            });
             Promise.all([fetchSplunkData]).then(function(data){
                 table.appendRows(data[0]);
                 doneCallback();
             });
       };
 
+      tableau.registerConnector(myConnector);
 
-     // tableau.registerConnector(myConnector);
+
 
       // Create event listeners for when the user submits the form
       $(document).ready(function () {
@@ -188,7 +190,7 @@ $('button[name="sh-next"]').click(function(){
         });
 
         // Submit SavedSearch
-        $("#submitButtonSavedSearch").click(function () {  
+        $("#submitButtonSavedSearch").click(function () {
           // new service instance
           var service = new createServiceInstance();
           var savedSearchName  = $("#SavedSearchDropDown option:selected").val();
@@ -196,7 +198,7 @@ $('button[name="sh-next"]').click(function(){
         });
 
         // Submit Custom SPL
-        $("#submitButtonSPL").click(function () {  
+        $("#submitButtonSPL").click(function () {
           // new service instance
           var service = new createServiceInstance();
           var searchQuery = $("#SPLTextArea").val();
@@ -285,8 +287,7 @@ function executeSavedSearch(service, searchName){
 
 function executeSPL(service, searchQuery){
   // Eliminating meta fields data in output
-  searchQuery = searchQuery + " | fields - _bkt, _cd, _indextime, _raw, _si, _subsecond, _sourcetype, splunk_server, linecount, component, 
-punct | fields *"
+  searchQuery = searchQuery + " | fields - _bkt, _cd, _indextime, _raw, _si, _subsecond, _sourcetype, splunk_server, linecount, component, punct | fields *"
 
   // Maximum records Search would return
   var max_record_limit = 10000;
@@ -301,10 +302,9 @@ punct | fields *"
   var isPaused  = false;
   var cols      = [];
   var res       = null;
-  
 
-  // Create the connector object
   var myConnector = tableau.makeConnector();
+
 
   // A blocking search returns the job's SID when the search is done
   console.log("Wait for the search to finish...");
@@ -318,7 +318,7 @@ punct | fields *"
         searchParams,
         function(err, job) {
           console.log("...done!\n");
-    
+
           // Get the job from the server to display more info
           job.fetch(function(err){
             // Display properties of the job
@@ -328,7 +328,7 @@ punct | fields *"
             console.log("The number of results: " + job.properties().resultCount);
             console.log("Search duration:       " + job.properties().runDuration + " seconds");
             console.log("This job expires in:   " + job.properties().ttl + " seconds");
-    
+
             // Get the results and display them
             job.results({count: max_record_limit, output_mode: "JSON"}, function(err, results) {
               console.log(results.results);
@@ -354,15 +354,15 @@ punct | fields *"
 
               schemaCallback([tableInfo]);
             })
-    
+
           });
-    
+
         }
       );
 
- 
+
    };
-  
+
   // Sync data received from Splunk to Tableau
   myConnector.getData = function (table, doneCallback) {
      var fetchSplunkData = new Promise(function(resolve,reject){
@@ -373,24 +373,22 @@ punct | fields *"
               isPaused = false;
               tableData.push(res[i]);
           }
-          resolve(tableData); 
+          resolve(tableData);
       });
-  
+
       Promise.all([fetchSplunkData]).then(function(data){
           table.appendRows(data[0]);
           doneCallback();
       });
   };
-  
-  tableau.registerConnector(myConnector);
 
-  tableau.connectionName = "Splunk Feed";  
-      tableau.submit();  
-      /*
-    setTimeout(() => {
-      tableau.connectionName = "Splunk Feed";  
-      tableau.submit();  
+//  tableau.registerConnector(myConnector);
+ tableau.connectionName = "Splunk Feed";
+ tableau.submit();
+
+ /*   setTimeout(() => {
+      tableau.connectionName = "Splunk Feed";
+      tableau.submit();
     }, 5000);
   */
 }
-
