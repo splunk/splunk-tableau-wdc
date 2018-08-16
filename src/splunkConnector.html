@@ -1,28 +1,155 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Splunk Connection</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- jQuery - Bootstrap - Promisejs - SplunkJS SDK - TableauWDC -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
-    <script src="https://unpkg.com/splunk-sdk@1.8.4/client/splunk.min.js" type="text/javascript"></script>
-    <script src="https://connectors.tableau.com/libs/tableauwdc-2.3.latest.min.js" type="text/javascript"></script>
+    <title>Splunk Connection</title>
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <style>
+    .searchSection {
+        border: 1px #6c757d dotted;
+        padding: 10px;
+        margin: 10px;
+    } 
+    #schema, #SavedSearchDropDown .customSelect{
+      min-width: 300px !important;
+    }
+    </style>
 </head>
 <body>
+<div class="container">
+    <!-- Content here -->
+    <h2>Splunk-Tableau WDC</h2>
+    <p>To get data from Splunk, follow steps...</p>
 
-<div class="container container-table">
-<div class="alert alert-primary" role="alert"><pre class="log">== DEBUG Logs == </pre></div>
-      <div class="row vertical-center-row">
-          <div class="text-center col-md-4 col-md-offset-4">
-            <button type="button" id="submitButton" class="btn btn-success" style="margin: 10px;">Get Splunk Data!</button>
-        </div>
-      </div>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" 
+aria-selected="true">1. Search Head</a></li>
+    <li class="nav-item"><a class="nav-link" id="savedsearch-spl-tab" data-toggle="tab" href="#savedsearch-spl" role="tab" 
+aria-controls="savedsearch-spl-tab" aria-selected="false">2. Saved Search / SPL</a></li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <!-- Tab 1 -->
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <br />
+          <!-- hostname -->
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Search Head</span>
+            </div>
+            <input autocomplete=on type="text" name="hostname" class="form-control" aria-label="Search Head" title="domain or ip address of 
+search head" placeholder="sh.example.com" value="" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="input-group input-group-sm mb-3">
+            <!-- username -->
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Username</span>
+            </div>
+            <input autocomplete=on type="text" name="username"  class="form-control" aria-label="Username" title="username to access splunk 
+instance" placeholder="admin" value="admin" aria-describedby="inputGroup-sizing-sm">
+            &nbsp;  &nbsp;
+            <!-- password -->
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Password</span>
+            </div>
+            <input autocomplete=on type="password" name="password"  class="form-control" aria-label="Password" title="password to access 
+splunk instance" value="" aria-describedby="inputGroup-sizing-sm">
+          </div>
+
+          <div class="input-group input-group-sm mb-3">
+            <!-- management_port -->
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Management Port</span>
+            </div>
+            <input type="text" name="management_port"  class="form-control" aria-label="Management Port" title="default splunk management port 
+is 8089" placeholder="8089" value="8089" aria-describedby="inputGroup-sizing-sm">
+            &nbsp;  &nbsp;
+
+            <!-- schema -->
+            <div class="input-group-prepend">
+              <label class="input-group-text" id="inputGroup-sizing-sm" for="schema">Schema</label>
+            </div>
+            <select  name="schema" class="custom-select form-control" id="schema">
+              <option title="By default, HTTPS is enabled on management port. Valid SSL certificate is required." value="https" 
+selected>https</option>
+              <option title="Choose HTTP (insecure), if SSL is disabled on Management port." value="http">http (insecure)</option>
+            </select>
+          </div>
+
+          <!-- buttons: Test / Next -->
+          <button type="button" name="sh-test-connection" class="btn btn-primary">Test Connection</button>
+          <button type="button" name="sh-next" class="btn btn-success">Next</button>
+    </div>
+
+    <!-- Tab 2 -->
+    <div class="tab-pane fade" id="savedsearch-spl" role="tabpanel" aria-labelledby="savedsearch-spl-tab">
+          <br />
+
+          <!-- information -->
+          <div class="alert alert-primary" role="alert">
+          You may choose one of the <b>Saved Search</b> from the list or write <b>custom SPL</b> to get data into Tableau.
+          </div>
+
+          <div class="row">
+            <!-- dropdown for SavedSearch -->
+            <div class="col searchSection">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="SavedSearchDropDown">Saved Search</label>
+                </div>
+                <select class="custom-select" id="SavedSearchDropDown"> <!-- inputGroupSelect01 -->
+                  <!-- <option selected>Choose...</option> -->
+                </select>
+                &nbsp;
+                <button type="button" id="refreshButtonSavedSearch" class="btn btn-success glyphicon glyphicon-refresh"> refresh</button>
+
+              </div>
+              <br />
+
+              <button type="button" id="submitButtonSavedSearch" class="btn btn-success">[SavedSearch] Get Splunk Data!</button>
+            </div>
+            <!-- for SPL -->
+            <div class="col searchSection">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Custom SPL</span>
+                </div>
+                <textarea class="form-control" id="SPLTextArea" aria-label="Custom SPL" placeholder="i.e. search index=_internal | head 10 | 
+table host, source, sourcetype"></textarea>
+              </div>
+              <br />
+              <button type="button" id="submitButtonSPL" class="btn btn-success">[SPL] Get Splunk Data!</button>
+            </div>
+          </div>
+
+    </div>
+
   </div>
 
+  <!-- error handling -->
+  <div class="alert alert-warning alert-dismissible fade connectionError" role="alert"></div>
+  <div class="alert alert-success alert-dismissible fade connectionSuccessful" role="alert"></div>
+
+</div>
+
+
+    <!-- jQuery - Bootstrap - Promisejs - SplunkJS SDK - TableauWDC -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" 
+integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" 
+integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+
+<script src="https://www.promisejs.org/polyfills/promise-7.0.4.min.js"></script>
+    <script src="https://unpkg.com/splunk-sdk@1.8.4/client/splunk.min.js" type="text/javascript"></script>
+    <script src="https://connectors.tableau.com/libs/tableauwdc-2.3.latest.min.js" type="text/javascript"></script>
   <!-- splunkConnector -->
-  <script type="text/javascript" src="splunkConnector.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"  type="text/javascript"  ></script>
+
+ <script type="text/javascript" src="splunkConnector.js"></script>
 </body>
 </html>
+
