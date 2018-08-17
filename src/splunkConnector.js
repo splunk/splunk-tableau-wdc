@@ -1,21 +1,11 @@
 
 
 $("#SavedSearchDropDown").change(function () {
-        console.log($("#SavedSearchDropDown option:selected").attr('title'));
+  console.log($("#SavedSearchDropDown option:selected").attr('title'));
 });
 
 $("#SearchHeadConfigButton").click(function () {
   $('#SavedSearchDropDown option:selected').attr("title");
-
-  var _user             = "admin";
-  var _pass             = "Chang3d!";
-  var _schema           = "https";
-  var _host   	        =  "tableau.splunk.link";
-  var _management_port 	= "8089"
-
-
-
-
 });
 
 // Create a Service instance via Splunk JS
