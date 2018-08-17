@@ -52,6 +52,14 @@ $('button[name="sh-test-connection"]').click(function(){
       listSavedSearch(service);
       $('.connectionSuccessful').append("<br>[-] Populated SavedSearch");
 
+      // Enable Next tab
+      $("#savedsearch-spl-tab").removeClass('disabled');
+
+      // Hide alert after 3s
+      setTimeout(function() {
+          $(".connectionSuccessful").removeClass("show");
+      }, 3000);
+
     }
     catch(err){
       log(err);
@@ -67,6 +75,10 @@ $('button[name="sh-test-connection"]').click(function(){
       log('Error timeout');
       $('.connectionError').addClass('show');
       $('.connectionError').html("Failed! Verify entered server details.");
+      // Hide alert after 3s
+      setTimeout(function() {
+          $(".connectionError").removeClass("show");
+      }, 3000);
     }
   }, 3000);
 
@@ -99,6 +111,9 @@ $('button[name="sh-test-connection"]').click(function(){
         var auth_str = JSON.stringify(auth);
         var query_data =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchName) + delimiter + auth_str));
 
+        // Show panel depicting with resulting link
+        $("#panel-linkGen").addClass("show");
+
         // Adds link along with query infromation to  the LinkGen textarea
         $("#linkGen").html(linkGen_base + query_data);
         $("linkGen").focus();
@@ -121,6 +136,9 @@ $('button[name="sh-test-connection"]').click(function(){
         var auth_str = JSON.stringify(auth);
         var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str));
 
+        // Show panel depicting with resulting link
+        $("#panel-linkGen").addClass("show");
+        
         // Adds link along with query infromation to  the LinkGen textarea
         $("#linkGen").html(linkGen_base + query_data);
 
