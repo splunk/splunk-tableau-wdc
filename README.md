@@ -5,6 +5,6 @@
 ## Contributors
 
 * Erica Pescio
-* Mayur Pipaliya
+* Mayur Pipaliya
 * Karthika Krishnan
 * Joe Welsh
