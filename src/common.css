@@ -1,0 +1,84 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:300);
+body{
+    background: url(https://www.toptal.com/designers/subtlepatterns/patterns/handmadepaper.png);
+    font-family: 'Ubuntu';
+
+}
+.navbar-brand{
+    margin-right: .8rem;
+}
+footer div.container {
+    text-align: right;
+}
+img.logo {
+    width: 30%;
+}
+.jumbotron .form-control {
+    margin-bottom: .9em;
+}
+.credentials-icon {
+    margin-bottom: 10%;
+    text-align: center;
+}
+.settings-icon {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    text-align: center;
+}
+.page-header {
+    text-align: center;
+}
+.server-info .form-control {
+    margin-bottom: .9em;
+}
+.containerDesign{
+    background: #ffffff52;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+}
+.alert {
+    margin-top: 2%;
+}
+.well {
+    margin-top: 2%;
+}
+#linkGen {
+    overflow: scroll;
+    height: 100px;
+    word-wrap: break-word;
+}
+
+/* wdc */
+
+.card-header > h6 {
+    display: inline;
+}
+.card .card-header:before{
+    /* symbol for "opening" panels */
+    content: "▼";    /* adjust as needed, taken from bootstrap.css */
+}
+.card .card-header.collapsed:before{
+    /* symbol for "collapsed" panels */
+    content: "▶";    /* adjust as needed, taken from bootstrap.css */
+}
+.searchSection {
+    border: 1px #6c757d dotted;
+    padding: 10px;
+    margin: 10px;
+}
+#schema, #SavedSearchDropDown .customSelect{
+    min-width: 300px !important;
+}
+.alert-input-information{
+    max-width: 80%; /* 300px; */
+}
+.alert-input-information > pre {
+    word-wrap: break-word;
+}
+.containerDesign{
+    background: #ffffff52;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+}
