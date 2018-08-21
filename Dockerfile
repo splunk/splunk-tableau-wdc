@@ -25,7 +25,7 @@ EXPOSE 80
 # Start Web Server
 # CMD [ "npm", "start"]
 
-CMD ls -lah; git pull; ls -lah; npm start
+CMD git pull && npm start
 
 
 # For Bash:
@@ -34,7 +34,7 @@ CMD ls -lah; git pull; ls -lah; npm start
 # Build Docker Image from Dockerfile
 ## docker build https://github.com/splunk/splunk-tableau-wdc.git#master:.
 # docker build . -t splunk-tableau-wdc
-# docker run -p 80:80 splunk-tableau-wdc:latest
+# docker run -t -i -p 80:80 splunk-tableau-wdc:latest
 
 ## PUSH
 # docker login -u teamfdse
@@ -43,4 +43,4 @@ CMD ls -lah; git pull; ls -lah; npm start
 
 ## PULL
 # docker pull teamfdse/splunk-tableau-wdc
-# docker run -p 80:80 teamfdse/splunk-tableau-wdc:latest
+# docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest
