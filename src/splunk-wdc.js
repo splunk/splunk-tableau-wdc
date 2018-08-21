@@ -34,9 +34,13 @@
         output_mode: "JSON"
     };
 
-    // Using /proxy to bypass CORS and SSL validation
-    // var http           = new splunkjs.JQueryHttp();
-    var http            = new splunkjs.ProxyHttp("/proxy");
+    if(_params[3] == "proxy=disabled"){
+      var http           = new splunkjs.JQueryHttp();
+    }else{
+      // Using /proxy to bypass CORS and SSL validation
+      var http            = new splunkjs.ProxyHttp("/proxy");
+    }
+
     var service         = new splunkjs.Service(http, auth);
 
     // Populate UI

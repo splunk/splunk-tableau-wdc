@@ -5,6 +5,8 @@ var delimiter = "[-][-][-]";
 var url_dir = window.location.href.substring(0, window.location.href.lastIndexOf('/'));
 var linkGen_base = url_dir + "/" + "splunk-wdc.html?query=";
 
+
+
 // Create a Service instance via Splunk JS
 function createServiceInstance() {
 
@@ -25,9 +27,11 @@ function createServiceInstance() {
   };
 
   // Create a Service instance
-  // var http    = new splunkjs.JQueryHttp();
-  var http = new splunkjs.ProxyHttp("/proxy");
-  var service = new splunkjs.Service(http, auth);
+  if(window.location.href.split("?")[1] == "proxy=disabled"){
+      var http    = new splunkjs.JQueryHttp();
+   }else{
+      var http    = new splunkjs.ProxyHttp("/proxy");
+   }
   log(service);
   return service;
 }
@@ -35,9 +39,9 @@ function createServiceInstance() {
 
 
 var configure_search_head_tooltip = `
-• Splunk <b>search head management port (8089<b/> must be exposed to the internet for the connector to retrieve data. Easy way to check  connectivity is by using “Test Connection” button.
-• <b>Temporarily expose Internal Splunk</b>  via <b>ngrok tcp sh.internal.example.com:8089</b>. Learn more about ngrok at https://ngrok.com
-• <b>Deploy solution internally:</b> For circumstances where Search Head cannot be exposed to the internet, this solution can be deployed within the internal network where both Tableau and Splunk can access the WDC Connector.
+• Splunk search head management port (8089 must be exposed to the internet for the connector to retrieve data. Easy way to check  connectivity is by using “Test Connection” button.
+• Temporarily expose Internal Splunk via ngrok tcp sh.internal.example.com:8089. Learn more about ngrok at https://ngrok.com
+• Deploy solution internally: For circumstances where Search Head cannot be exposed to the internet, this solution can be deployed within the internal network where both Tableau and Splunk can access the WDC Connector.
 `;
 
 $('.nav-item').attr('title',configure_search_head_tooltip);
@@ -127,7 +131,14 @@ $('button[name="sh-test-connection"]').click(function(){
 
         // Generate query parameters :: base64 encoded ( compressed (params))
         var auth_str        = JSON.stringify(auth);
-        var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName));
+
+        // Add proxy=disabled
+        if(window.location.href.split("?")[1] == "proxy=disabled"){
+          var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName + delimiter + "proxy=disabled"));
+         }else{
+           var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName));
+         }
+
 
         // Show panel depicting with resulting link
         $("#panel-linkGen").addClass("show");
@@ -155,7 +166,13 @@ $('button[name="sh-test-connection"]').click(function(){
         }else{
           // Generate query parameters :: base64 encoded ( compressed (params))
           var auth_str = JSON.stringify(auth);
-          var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  ));
+
+          // Add proxy=disabled
+          if(window.location.href.split("?")[1] == "proxy=disabled"){
+            var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  + delimiter + "proxy=disabled" ));
+           }else{
+             var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  ));
+           }
 
           // Show panel depicting with resulting link
           $("#panel-linkGen").addClass("show");
