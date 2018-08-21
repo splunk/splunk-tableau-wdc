@@ -32,10 +32,11 @@ img.logo {
     margin-bottom: .9em;
 }
 .containerDesign{
-    background: #ffffff52;
+    background: #ffffff7d;
     border-radius: 10px;
     margin-top: 20px;
     padding: 20px;
+    box-shadow: 0px 0px 1px #757575;
 }
 .alert {
     margin-top: 2%;
@@ -67,9 +68,7 @@ img.logo {
     padding: 10px;
     margin: 10px;
 }
-#schema, #SavedSearchDropDown .customSelect{
-    min-width: 300px !important;
-}
+
 .alert-input-information{
     max-width: 80%; /* 300px; */
 }

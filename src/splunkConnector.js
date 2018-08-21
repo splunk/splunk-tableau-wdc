@@ -32,6 +32,20 @@ function createServiceInstance() {
   return service;
 }
 
+
+
+var configure_search_head_tooltip = `
+• Splunk <b>search head management port (8089<b/> must be exposed to the internet for the connector to retrieve data. Easy way to check  connectivity is by using “Test Connection” button.
+• <b>Temporarily expose Internal Splunk</b>  via <b>ngrok tcp sh.internal.example.com:8089</b>. Learn more about ngrok at https://ngrok.com
+• <b>Deploy solution internally:</b> For circumstances where Search Head cannot be exposed to the internet, this solution can be deployed within the internal network where both Tableau and Splunk can access the WDC Connector.
+`;
+
+$('.nav-item').attr('title',configure_search_head_tooltip);
+// $('[data-toggle="tooltip"]').tooltip();
+$('.nav-item').attr('data-original-title',configure_search_head_tooltip);
+
+
+
 // Handle click event for Test Connection button
 $('button[name="sh-test-connection"]').click(function(){
 

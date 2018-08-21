@@ -4,17 +4,26 @@
 
     var cols                = [];                                           // Tableau Column definition
     var res                 = null;                                         // Response Handler
-    var max_record_limit    = 50000;                                        // Max record splunk would return in one go.
+    var max_record_limit    = 50000;                                        // Max record splunk would return in one go. (max is 50K)
     var myConnector         = new tableau.makeConnector();                  // Create the connector object
 
     // returns array of SPL Query string and Auth string
     _params = lzw_decode(b64DecodeUnicode(window.location.href.split("?")[1].split("query=")[1])).split("[-][-][-]");
 
     log(_params);
-    var searchQuery     = "search "
+    if(_params[0].indexOf("datamodel")  >=0 ){
+        var searchQuery     = " "
                             + _params[0]
                             + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
                             + "";                                           // Build search Query  i.e. "search index=_internal | head 1000 | table host, source, sourcetype, _time"
+    }else{
+        var searchQuery     = "search "
+        + _params[0]
+        + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
+        + "";
+    }
+
+
     var auth            = JSON.parse(_params[1]);                           // Parse JSON object from Stringified Auth details string
     var cName           = _params[2];                                       // Connection Name
 
@@ -118,7 +127,7 @@
                                 // Tableau Column Schema JS SDK Calls...
                                 var tableInfo = {
                                     id: "splunkFeed",
-                                    alias: "Splunk Feed Test",
+                                    alias: cName, // "Splunk Feed Test",
                                     columns: cols
                                 };
 
@@ -136,8 +145,9 @@
         var fetchSplunkData = new Promise(function(resolve,reject){
             var tableData = [];
             // log(res.length);
-            for (var i=0; i<res.length; ++i)
+            for (var i=0; i<res.length; ++i) {
                 tableData.push(res[i]);
+            }
             resolve(tableData);
         });
         Promise.all([fetchSplunkData]).then(function(data){
