@@ -32,6 +32,7 @@ function createServiceInstance() {
    }else{
       var http    = new splunkjs.ProxyHttp("/proxy");
    }
+   var service    = new splunkjs.Service(http,auth);
   log(service);
   return service;
 }
