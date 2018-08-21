@@ -61,7 +61,7 @@ Before proceeding, please:
 
       `$ certbot certonly --manual --preferred-challenges dns  --config-dir=. --work-dir=. --logs-dir=.`
 
-       > Note: Enter Splunk Search Head DNS (domain.tld) when asked by certbot.
+       > **Note:** Enter Splunk Search Head DNS (domain.tld) when asked by certbot.
 
    * *On Linux on Bash Shell*
 
@@ -81,7 +81,7 @@ Before proceeding, please:
 
 4. Enable Management Port to use SSL with a Valid Certificate
 
-   * Open *$SPLUNK_HOME/etc/system/local/server.conf*
+   * Open `$SPLUNK_HOME/etc/system/local/server.conf`
 
    * Update the *sslConfig* stanza to be this:
         ```
@@ -105,20 +105,32 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 #### Prerequisites for Employing Splunk Tableau WDC
 
-* The Splunk Tableau WDC will requires network accessibility to the Splunk Search Head
+* The Splunk Tableau WDC will require network accessibility to the Splunk Search Head
 
 * The WDC needs to run on a dedicated web server OR inside [Tableau Server](https://onlinehelp.tableau.com/current/server/en-us/datasource_wdc.htm)
 
 #### Deploying Splunk Tableau WDC to a Web Server
+Two alternative options are reported below.
 
 1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to a Traditional Web Server
 
     1. Download or clone the git repo: [https://github.com/splunk/splunk-tableau-wdc.git](https://github.com/splunk/splunk-tableau-wdc.git)
 
-    2. Move the contents **splunk-tableau-wdc/src **to configured directory on web server
+    2. Move the contents **splunk-tableau-wdc/src** to configured directory on web server
 
-    3. Ensure you can connect to splunkConnector.html with a browser with the appropriate URL and required URI Path
+    3. Ensure you can connect to `splunkConnector.html` with a browser with the appropriate URL and required URI Path
 
+2. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to Amazon Simple Storage Service (S3)
+
+    1. Login to your AWS account and create your S3 bucket ([tutorial](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html))
+    
+    2. Download or clone the git repo: [https://github.com/splunk/splunk-tableau-wdc.git](https://github.com/splunk/splunk-tableau-wdc.git)
+    
+    3. Upload the content of **splunk-tableau-wdc/src** to S3 ([tutorial](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/upload-objects.html))
+    
+    4. Update S3 bucket policy to grant public access to the uploaded WDC ([tutorial](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html#example-bucket-policies-use-case-2))
+    
+    5. Ensure you can connect via browser to the following URL `https://s3-<your_bucket_region>.amazonaws.com/<your_bucket_name>/splunkConnector.html`
 
 #### Using the Splunk Tableau WDC
 
