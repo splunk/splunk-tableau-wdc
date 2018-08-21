@@ -23,7 +23,8 @@ replace({
 });
 
 // Run Node Web Server (splunk-sdk)
-console.log("\n[-] Starting Node Web Server\n");
+console.log("\n[-] Starting Node Web Server");
+console.log("\n[-] Access Splunk Tableau WDC at http://localhost/src/splunkConnector.html \n");
 (function() {
     try {
         require('./node_modules/splunk-sdk/bin/cli');
