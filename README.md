@@ -21,78 +21,6 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, this solution can be [deployed](#deploying-splunk-tableau-wdc-to-a-web-server) within the internal network where both Tableau and Splunk can access the WDC Connector.
 
-4. **[Optional]** Enable Cross-Origin Resource Sharing (CORS) as explained [here](#enable-cors-connections-on-splunk-cors-connection).
-
-5. **[Optional]** Splunk Management port 8089 (by default) and SSL status should be enabled. Enable a valid SSL Certificate on this port as explained [here](#enable-valid-ssl-certificate-on-splunk-management-port-8089) before deploying your connector.
-
-#### Enable CORS Connections on Splunk (#CORS-CONNECTION)
-
-Edit `$SPLUNK_HOME/etc/system/local/server.conf` configuration file as reported below, then restart Splunk.
-
-```
-[httpServer]
-crossOriginSharingPolicy = <your_site_address>
-```
-
-#### Enable Valid SSL Certificate on Splunk Management Port (8089)
-
-Before proceeding, please:
-
-* Make sure you have root/sudo access to the server running your Splunk instance,
-
-* Verify your company security policy for issuing valid SSL Certificates.
-
-
-1. DNS Mapping of your Splunk Instance
-
-   The Splunk Instance (search head) the WDC interacts with needs public DNS resolution.  If your domain is not registered you’ll need to employ a service like [Cloudflare](http://cloudflare.com/) DNS.
-
-   Using [Cloudflare](http://cloudflare.com/) is straight forward.  Just ensure to assign **Sub-Domain A** value to the IP address of your publicly exposed Splunk search head.
-
-2. Issue Valid SSL Certificate For Splunk Management Port
-
-   In compliance with your company security policy, you might have to request the certificate through an external third party Certificate Authority (e.g. [Symantec](https://www.websecurity.symantec.com/ssl-certificate), [GoDaddy](https://www.godaddy.com/web-security/ssl-certificate), [Comodo](https://www.comodoca.com/en-us/), etc). In association with the created domain and after payment and validation, they will provide a couple of [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files needed to complete this configuration (skip to [next](#heading=h.vo6s1kloq3sd) step).
-
-   Otherwise, with the domain from previous step, use [LetsEncrypt](https://letsencrypt.org/getting-started/) to issue new [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files associated with that domain. Following commands can be executed from any Apple or Linux based machine.
-
-   * *Apple Computers in Terminal*
-
-      `$ brew install certbot`
-
-      `$ certbot certonly --manual --preferred-challenges dns  --config-dir=. --work-dir=. --logs-dir=.`
-
-       > **Note:** Enter Splunk Search Head DNS (domain.tld) when asked by certbot.
-
-   * *On Linux on Bash Shell*
-
-      `$ sudo yum install letsencrypt`
-
-      `$ sudo letsencrypt certonly --standalone -d *<replace with splunk DNS hostname>*`
-
-3. Combine SSL Cert chain and PKey
-
-   The previous step created *fullchain.pem* and *privkey.pem*. Combine these two files into a single file:
-
-   * On Apple Computer Terminal or Linux Bash Shell
-
-      `$ cat fullchain.pem privkey.pem > consolidated.pem`
-
-   * Move the `consolidated.pem` to `$SPLUNK_HOME/etc/auth/` on the Splunk Search Head.
-
-4. Enable Management Port to use SSL with a Valid Certificate
-
-   * Open `$SPLUNK_HOME/etc/system/local/server.conf`
-
-   * Update the *sslConfig* stanza to be this:
-        ```
-        [sslConfig]
-        serverCert = $SPLUNK_HOME/etc/auth/consolidated.pem
-        ```
-
-        > **Note**: Default value for **enableSplunkdSSL** is `true`
-
-   * Restart Splunk
-
 ### Splunk Tableau Web Data Connector
 
 Tableau has a wonderful [tutorial](https://tableau.github.io/webdataconnector/docs/wdc_tutorial.html) that covers how to create Web Data Connectors (WDC).  Instead of building your own to use with Splunk the Forward Deployed Software Engineering (FDSE) at Splunk has created [the Splunk Tableau WDC](https://tableau-wdc.splunk.link/) which you can immediately use.  
@@ -111,17 +39,36 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 #### Deploying Splunk Tableau WDC to a Web Server
 
-1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker!
+1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker [Recommended]
 
-    1. Download and Install [Docker :whale:](https://www.docker.com/get-started)
+    a. Download and Install [Docker :whale:](https://www.docker.com/get-started)
 
-    2. Pull docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
+    b. In Terminal (Console)
+    
+    * Verify that the docker is installed: `docker -v`
+    * Pull docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
+    * Run docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
 
-    3. Run docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
+    c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
+    
+    **Note:** Though localhost is the host in this example when Docker deploys the image the URL/IP Address will be assigned to that instance.  
+    
+2. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to **Traditional Web Server**
 
-    3. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
+    a. Install Source Files on Web Server
+    
+    * Download the Github repo: https://github.com/splunk/splunk-tableau-wdc.git
+    * Move the contents of the directory `splunk-tableau-wdc/src/` to the configured directory on web server.
+    * Ensure that you can connect to `http://localhost/splunkConnector.html?proxy=disabled` with a browser with the appropriate URL and required URI Path
+    
+    b. Prepare the Splunk Search Head
+    
+    * Enable Cross-Origin Resource Sharing (CORS) [Appendix A]
+    * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B] 
+    
 
-#### Using the Splunk Tableau WDC
+
+#### Configuring and Testing Splunk Tableau WDC
 
 1. Configure Splunk Search Head Connection
 
@@ -175,15 +122,15 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
     b. Not specifying the "[table](http://docs.splunk.com/Documentation/Splunk/7.1.2/SearchReference/Table)" command in your SPL, would yield all metadata for the SPL.
 
-#### Push Splunk Data into Tableau with Splunk Tableau WDC
+#### Using Splunk Tableau WDC As Data Source in Tableau
 
-##### Using Tableau Desktop :desktop_computer:
+##### With Tableau Desktop :desktop_computer:
 
 1. Follow the "**Use a WDC in Tableau Desktop**" instructions found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_tableau).
 
 2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#using-the-splunk-tableau-wdc).
 
-##### Using Tableau Server :cloud:
+##### With Tableau Server :cloud:
 
 1. Follow the "**Use a WDC in Tableau Server**“ found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
 
@@ -260,6 +207,77 @@ From Powershell (Win):
 * To add Splunk WDC into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -a <https://sh.example.com:8089>`, replacing the URL with yours
 
 * To restart Tableau Server after modifying the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin restart`
+
+## Appendix
+
+
+### Enable CORS Connections on Splunk
+
+Edit `$SPLUNK_HOME/etc/system/local/server.conf` configuration file as reported below, then restart Splunk.
+
+```
+[httpServer]
+crossOriginSharingPolicy = <your_site_address>
+```
+
+### Enable Valid SSL Certificate on Splunk Management Port (8089)
+
+Before proceeding, please:
+
+* Make sure you have root/sudo access to the server running your Splunk instance,
+
+* Verify your company security policy for issuing valid SSL Certificates.
+
+
+1. DNS Mapping of your Splunk Instance
+
+   The Splunk Instance (search head) the WDC interacts with needs public DNS resolution.  If your domain is not registered you’ll need to employ a service like [Cloudflare](http://cloudflare.com/) DNS.
+
+   Using [Cloudflare](http://cloudflare.com/) is straight forward.  Just ensure to assign **Sub-Domain A** value to the IP address of your publicly exposed Splunk search head.
+
+2. Issue Valid SSL Certificate For Splunk Management Port
+
+   In compliance with your company security policy, you might have to request the certificate through an external third party Certificate Authority (e.g. [Symantec](https://www.websecurity.symantec.com/ssl-certificate), [GoDaddy](https://www.godaddy.com/web-security/ssl-certificate), [Comodo](https://www.comodoca.com/en-us/), etc). In association with the created domain and after payment and validation, they will provide a couple of [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files needed to complete this configuration (skip to [next](#heading=h.vo6s1kloq3sd) step).
+
+   Otherwise, with the domain from previous step, use [LetsEncrypt](https://letsencrypt.org/getting-started/) to issue new [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files associated with that domain. Following commands can be executed from any Apple or Linux based machine.
+
+   * *Apple Computers in Terminal*
+
+      `$ brew install certbot`
+
+      `$ certbot certonly --manual --preferred-challenges dns  --config-dir=. --work-dir=. --logs-dir=.`
+
+       > **Note:** Enter Splunk Search Head DNS (domain.tld) when asked by certbot.
+
+   * *On Linux on Bash Shell*
+
+      `$ sudo yum install letsencrypt`
+
+      `$ sudo letsencrypt certonly --standalone -d *<replace with splunk DNS hostname>*`
+
+3. Combine SSL Cert chain and PKey
+
+   The previous step created *fullchain.pem* and *privkey.pem*. Combine these two files into a single file:
+
+   * On Apple Computer Terminal or Linux Bash Shell
+
+      `$ cat fullchain.pem privkey.pem > consolidated.pem`
+
+   * Move the `consolidated.pem` to `$SPLUNK_HOME/etc/auth/` on the Splunk Search Head.
+
+4. Enable Management Port to use SSL with a Valid Certificate
+
+   * Open `$SPLUNK_HOME/etc/system/local/server.conf`
+
+   * Update the *sslConfig* stanza to be this:
+        ```
+        [sslConfig]
+        serverCert = $SPLUNK_HOME/etc/auth/consolidated.pem
+        ```
+
+        > **Note**: Default value for **enableSplunkdSSL** is `true`
+
+   * Restart Splunk
 
 
 
