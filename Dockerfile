@@ -42,5 +42,5 @@ CMD ls -lah; git pull; ls -lah; npm start
 # docker push teamfdse/splunk-tableau-wdc
 
 ## PULL
-# docker pull mayurah/splunk-tableau-wdc
-# docker run -p 80:80 mayurah/splunk-tableau-wdc:latest
+# docker pull teamfdse/splunk-tableau-wdc
+# docker run -p 80:80 teamfdse/splunk-tableau-wdc:latest
