@@ -23,6 +23,7 @@ replace({
 });
 
 // Run Node Web Server (splunk-sdk)
+console.log("\n[-] Starting Node Web Server\n");
 (function() {
     try {
         require('./node_modules/splunk-sdk/bin/cli');
