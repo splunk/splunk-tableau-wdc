@@ -19,7 +19,7 @@
 
 3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, this solution can be [deployed](#deploying-splunk-tableau-wdc-to-a-web-server) within the internal network where both Tableau and Splunk can access the WDC Connector.
 
-4. **[Optional]** Enable Cross-Origin Resource Sharing (CORS) as explained [here](#CORS-CONNECTION). 
+4. **[Optional]** Enable Cross-Origin Resource Sharing (CORS) as explained [here](#enable-cors-connections-on-splunk-cors-connection). 
 
 5. **[Optional]** Splunk Management port 8089 (by default) and SSL should be enabled.
 
@@ -133,7 +133,7 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 		![image alt text](screenshots/1-test-splunk-connectivity.png)
 
-2. Generate a URL Link to Use With Splunk Tableau WDC from within Tableau(#generate-a-url-link)
+2. Generate a URL Link to Use With Splunk Tableau WDC from within Tableau
 
     a. Select a Saved Search from the "**Saved Search**" dropdown OR enter a custom search inside “**Custom SPL**”
     
@@ -179,13 +179,13 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 1. Follow the "**Use a WDC in Tableau Desktop**" instructions found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_tableau).
 
-2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#generate-a-url-link). 
+2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#using-the-splunk-tableau-wdc). 
 
 ##### Using Tableau Server
 
 1. Follow the "**Use a WDC in Tableau Server**“ found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
 
-2. When adding a new data source -> Web Data Connector please use the URL you generated in the [previous section](#generate-a-url-link).
+2. When adding a new data source -> Web Data Connector please use the URL you generated in the [previous section](#using-the-splunk-tableau-wdc).
 
 ### Troubleshooting
 
@@ -256,7 +256,7 @@ From Powershell (Win)
 
 * To verify WDCs into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -l`
 
-* To add Splunk WDC into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -a` <[https://tableau.splunk.link:8089](https://tableau.splunk.link:8089)> replacing the URL with yours
+* To add Splunk WDC into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -a` <https://sh.example.com:8089> replacing the URL with yours
 
 * To restart Tableau Server after modifying the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin restart`
 
@@ -277,7 +277,6 @@ Note: Some external images and excerpts come from:
 * [How to enable CORS ](http://dev.splunk.com/view/webframework-developapps/SP-CAAAEW6)
 
 * [WDC in Tableau Server](https://onlinehelp.tableau.com/current/server/en-us/datasource_wdc.htm)
-
 
 
 
