@@ -4,7 +4,7 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 
 ## Try it ↙
-* An online version of the Tableau Web Data Connector for Splunk can be found here:  [:satellite: Splunk WDC Home](https://tableau-wdc.splunk.link/splunk-tableau-wdc/src/splunkConnector.html)
+* An online version of the Tableau Web Data Connector for Splunk can be found here:  [:satellite: Splunk WDC Home](https://tableau-wdc.splunk.link/src/splunkConnector.html)
 * [WDC Simulator](https://tableau-wdc.splunk.link/Simulator/index.html)
 
 
