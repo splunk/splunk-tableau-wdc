@@ -110,7 +110,6 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 * The WDC needs to run on a dedicated web server OR inside [Tableau Server](https://onlinehelp.tableau.com/current/server/en-us/datasource_wdc.htm)
 
 #### Deploying Splunk Tableau WDC to a Web Server
-Two alternative options are reported below.
 
 1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to a Traditional Web Server
 
@@ -119,18 +118,6 @@ Two alternative options are reported below.
     2. Move the contents **splunk-tableau-wdc/src** to configured directory on web server
 
     3. Ensure you can connect to `splunkConnector.html` with a browser with the appropriate URL and required URI Path
-
-2. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to Amazon Simple Storage Service (S3)
-
-    1. Login to your AWS account and create your S3 bucket ([tutorial](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html))
-    
-    2. Download or clone the git repo: [https://github.com/splunk/splunk-tableau-wdc.git](https://github.com/splunk/splunk-tableau-wdc.git)
-    
-    3. Upload the content of **splunk-tableau-wdc/src** to S3 ([tutorial](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/upload-objects.html))
-    
-    4. Update S3 bucket policy to grant public access to the uploaded WDC ([tutorial](https://docs.aws.amazon.com/AmazonS3/latest/dev/example-bucket-policies.html#example-bucket-policies-use-case-2))
-    
-    5. Ensure you can connect via browser to the following URL `https://s3-<your_bucket_region>.amazonaws.com/<your_bucket_name>/splunkConnector.html`
 
 #### Using the Splunk Tableau WDC
 
@@ -256,24 +243,23 @@ Example: `PS C:\Program Files\Tableau\Tableau 2018.2\bin> .\tableau.exe -DDebugW
 
 | Image  | Indication  |
 |---|---|
-|   | The Certificate is NOT valid.   | 
-|   |  The Certificate is valid. | 
+| ![invalid ssl](screenshots/8-ssl-certificate-invalid.png)  | The Certificate is NOT valid.   | 
+| ![valid ssl](screenshots/9-ssl-certificate-valid.png)    |  The Certificate is valid. | 
  
 Please note above screenshots have been taken using Chrome, graphics might differ from browser to browser.
 
 #### WDC Deployment to Tableau Server: Whitelisting 
 
-> If WDC has been deployed to Tableau Server, make sure you have added it to the safe list. 
-
-From Powershell (Win)
+If WDC has been deployed to Tableau Server, make sure you have added it to the safe list. 
+From Powershell (Win):
 
 * To verify WDCs into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -l`
 
-* To add Splunk WDC into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -a` <https://sh.example.com:8089> replacing the URL with yours
+* To add Splunk WDC into the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin whitelist_webdataconnector -a <https://sh.example.com:8089>`, replacing the URL with yours
 
 * To restart Tableau Server after modifying the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin restart`
 
-	
+
 
 ## References
 
