@@ -1,0 +1,31 @@
+{
+  "name": "splunk-tableau-wdc",
+  "version": "1.0.5",
+  "description": "A web data connector for Tableau to help you connect with Splunk data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js runserver",
+    "prod": "forever node app.js runserver"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splunk/splunk-tableau-wdc.git"
+  },
+  "keywords": [
+    "splunk",
+    "tableau",
+    "wdc",
+    "connector"
+  ],
+  "dependencies": {
+    "replace": "^1.0.0",
+    "splunk-sdk": ">= 1.8.4"
+  },
+  "author": "Team FDSE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/splunk/splunk-tableau-wdc/issues"
+  },
+  "homepage": "https://github.com/splunk/splunk-tableau-wdc#readme"
+}
