@@ -23,7 +23,7 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 4. **[Optional]** Enable Cross-Origin Resource Sharing (CORS) as explained [here](#enable-cors-connections-on-splunk-cors-connection). 
 
-5. **[Optional]** Splunk Management port 8089 (by default) and SSL should be enabled.
+5. **[Optional]** Splunk Management port 8089 (by default) and SSL status should be enabled. Enable a valid SSL Certificate on this port as explained [here](#enable-valid-ssl-certificate-on-splunk-management-port-8089) before deploying your connector.
 
 #### Enable CORS Connections on Splunk (#CORS-CONNECTION)
 
@@ -42,57 +42,56 @@ Before proceeding, please:
 
 * Verify your company security policy for issuing valid SSL Certificates. 
 
-1. **DNS Mapping of your Splunk Instance**
 
-> The Splunk Instance (search head) the WDC interacts with needs public DNS resolution.  If your domain is not registered you’ll need to employ a service like [Cloudflare](http://cloudflare.com/) DNS.  
+1. DNS Mapping of your Splunk Instance
 
-> Using [Cloudflare](http://cloudflare.com/) is straight forward.  Just ensure to assign **Sub-Domain A** value to the IP address of your publicly exposed Splunk search head.
+   The Splunk Instance (search head) the WDC interacts with needs public DNS resolution.  If your domain is not registered you’ll need to employ a service like [Cloudflare](http://cloudflare.com/) DNS. 
 
-2. Issue Valid SSL Certificate For Splunk Management Port
+   Using [Cloudflare](http://cloudflare.com/) is straight forward.  Just ensure to assign **Sub-Domain A** value to the IP address of your publicly exposed Splunk search head.
 
-> In compliance with your company security policy, you might have to request the certificate through an external third party Certificate Authority (e.g. [Symantec](https://www.websecurity.symantec.com/ssl-certificate), [GoDaddy](https://www.godaddy.com/web-security/ssl-certificate), [Comodo](https://www.comodoca.com/en-us/), etc). In association with the created domain and after payment and validation, they will provide a couple of [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files needed to complete this configuration (skip to [next](#heading=h.vo6s1kloq3sd) step).
+2. Issue Valid SSL Certificate For Splunk Management Port 
 
-> Otherwise, with the domain from previous step, use [LetsEncrypt](https://letsencrypt.org/getting-started/) to issue new [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files associated with that domain. Following commands can be executed from any Apple or Linux based machine. 
+   In compliance with your company security policy, you might have to request the certificate through an external third party Certificate Authority (e.g. [Symantec](https://www.websecurity.symantec.com/ssl-certificate), [GoDaddy](https://www.godaddy.com/web-security/ssl-certificate), [Comodo](https://www.comodoca.com/en-us/), etc). In association with the created domain and after payment and validation, they will provide a couple of [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files needed to complete this configuration (skip to [next](#heading=h.vo6s1kloq3sd) step).
 
-* *Apple Computers in Terminal*
+   Otherwise, with the domain from previous step, use [LetsEncrypt](https://letsencrypt.org/getting-started/) to issue new [PEM](https://support.quovadisglobal.com/kb/a37/what-is-pem-format.aspx) files associated with that domain. Following commands can be executed from any Apple or Linux based machine. 
 
-  `$ brew install certbot`
+   * *Apple Computers in Terminal*
 
-  `$ certbot certonly --manual --preferred-challenges dns  --config-dir=. --work-dir=. --logs-dir=.`
+      `$ brew install certbot`
 
-          * Note: Enter Splunk Search Head DNS (domain.tld) when asked by certbot.
+      `$ certbot certonly --manual --preferred-challenges dns  --config-dir=. --work-dir=. --logs-dir=.`
 
-* *On Linux on Bash Shell*
+       > Note: Enter Splunk Search Head DNS (domain.tld) when asked by certbot.
 
-  `$ sudo yum install letsencrypt`
+   * *On Linux on Bash Shell*
 
-  `$ sudo letsencrypt certonly --standalone -d *<replace with splunk DNS hostname>*`
+      `$ sudo yum install letsencrypt`
+
+      `$ sudo letsencrypt certonly --standalone -d *<replace with splunk DNS hostname>*`
 
 3. Combine SSL Cert chain and PKey
 
-  > The previous step created *fullchain.pem* and *privkey.pem*.  
+   The previous step created *fullchain.pem* and *privkey.pem*. Combine these two files into a single file:
 
-  > Combine these two files into a single file:
+   * On Apple Computer Terminal or Linux Bash Shell
 
-  1. On Apple Computer Terminal or Linux Bash Shell
+      `$ cat fullchain.pem privkey.pem > consolidated.pem`
 
-  `$ cat fullchain.pem privkey.pem > consolidated.pem`
-
-  2. Move the `consolidated.pem` to `$SPLUNK_HOME/etc/auth/` on the Splunk Search Head.
+   * Move the `consolidated.pem` to `$SPLUNK_HOME/etc/auth/` on the Splunk Search Head.
 
 4. Enable Management Port to use SSL with a Valid Certificate
 
-	* Open $SPLUNK_HOME/etc/system/local/server.conf
+   * Open *$SPLUNK_HOME/etc/system/local/server.conf*
 
-	* Update the sslConfig stanza to be this:
+   * Update the *sslConfig* stanza to be this:
         ```
         [sslConfig]
         serverCert = $SPLUNK_HOME/etc/auth/consolidated.pem
         ```
 	
-        **Note**: Default value for **enableSplunkdSSL** is `true`
+        > **Note**: Default value for **enableSplunkdSSL** is `true`
 
-	* Restart Splunk
+   * Restart Splunk
 
 ### Splunk Tableau Web Data Connector
 
