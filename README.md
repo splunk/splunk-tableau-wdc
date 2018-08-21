@@ -111,13 +111,15 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 #### Deploying Splunk Tableau WDC to a Web Server
 
-1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to a Traditional Web Server
+1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker
 
-    1. Download or clone the git repo: [https://github.com/splunk/splunk-tableau-wdc.git](https://github.com/splunk/splunk-tableau-wdc.git)
+    1. Download [Docker](https://www.docker.com/get-started)
 
-    2. Move the contents **splunk-tableau-wdc/src** to configured directory on web server
+    2. Pull docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
+    
+    3. Run docker image `docker run -p 80:80 teamfdse/splunk-tableau-wdc:latest`
 
-    3. Ensure you can connect to `splunkConnector.html` with a browser with the appropriate URL and required URI Path
+    3. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
 
 #### Using the Splunk Tableau WDC
 
