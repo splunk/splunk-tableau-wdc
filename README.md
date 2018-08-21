@@ -41,17 +41,17 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker [Recommended]
 
-    a. Download and Install [Docker :whale:](https://www.docker.com/get-started)
+    a. **Download** and **Install** [Docker :whale:](https://www.docker.com/get-started)
 
     b. In Terminal (Console)
     
-    * Verify that the docker is installed: `docker -v`
-    * Pull docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
-    * Run docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
+    * **Verify** that the docker is installed: `docker -v`
+    * **Pull** docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
+    * **Run** docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
 
     c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
     
-    **Note:** Though localhost is the host in this example when Docker deploys the image the URL/IP Address will be assigned to that instance.  
+    **Note:** Though localhost is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance. 
     
 2. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to **Traditional Web Server**
 
@@ -63,8 +63,8 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
     
     b. Prepare the Splunk Search Head
     
-    * Enable Cross-Origin Resource Sharing (CORS) [Appendix A]
-    * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B] 
+    * Enable Cross-Origin Resource Sharing (CORS) [Appendix A](#enable-cors-connections-on-splunk)
+    * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
     
 
 
