@@ -128,13 +128,13 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 1. Follow the "**Use a WDC in Tableau Desktop**" instructions found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_tableau).
 
-2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#using-the-splunk-tableau-wdc).
+2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#configuring-and-testing-splunk-tableau-wdc).
 
 ##### With Tableau Server :cloud:
 
 1. Follow the "**Use a WDC in Tableau Server**“ found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
 
-2. When adding a new data source -> Web Data Connector please use the URL you generated in the [previous section](#using-the-splunk-tableau-wdc).
+2. When adding a new data source -> Web Data Connector please use the URL you generated in the [previous section](#configuring-and-testing-splunk-tableau-wdc).
 
 ### Troubleshooting
 
