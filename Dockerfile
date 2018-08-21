@@ -25,7 +25,7 @@ EXPOSE 80
 # Start Web Server
 # CMD [ "npm", "start"]
 
-CMD git pull && npm start
+CMD git config --global user.email "docker@example.com"; git config --global user.name "Docker"; git stash; git pull; npm start
 
 
 # For Bash:
