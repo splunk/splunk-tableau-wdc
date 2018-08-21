@@ -17,7 +17,7 @@
 
 2. Use **ngrok** to temporarily expose Internal Splunk Instance via command `$ ngrok tcp sh.internal.example.com:8089`. Learn more about **ngrok** at [https://ngrok.com](https://ngrok.com)
 
-3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, this solution can be [deployed](#heading=h.xhlyui89ji4o) within the internal network where both Tableau and Splunk can access the WDC Connector.
+3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, this solution can be [deployed](#deploying-splunk-tableau-wdc-to-a-web-server) within the internal network where both Tableau and Splunk can access the WDC Connector.
 
 4. **[Optional]** Enable Cross-Origin Resource Sharing (CORS) as explained [here](#CORS-CONNECTION). 
 
