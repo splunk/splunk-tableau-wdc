@@ -133,7 +133,7 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 		![image alt text](screenshots/1-test-splunk-connectivity.png)
 
-2. Generate a URL Link to Use With Splunk Tableau WDC from within Tableau
+2. Generate a URL Link to Use With Splunk Tableau WDC from within Tableau(#generate-a-url-link)
 
     a. Select a Saved Search from the "**Saved Search**" dropdown OR enter a custom search inside “**Custom SPL**”
     
@@ -146,6 +146,7 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 3. Test Generated URL Inside Tableau Simulator (Optional) 
  
 * Note: You’ll need the URL from "Copy link to Tableau WDC" from previous step.  You can install your [own instance of Tableau Simulator](https://tableau.github.io/webdataconnector/docs/#run-the-simulator) OR test with [FDSE’s instance](https://tableau-wdc.splunk.link/Simulator/index.html) using the following steps:
+
     a. Paste the **URL** from the previous step
     
     b. Press the "**Initialize Connector**" button.
@@ -178,13 +179,13 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 1. Follow the "**Use a WDC in Tableau Desktop**" instructions found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_tableau).
 
-2. For Step 2, enter the URL you generated with the Splunk Tableau WDC (from previous section). 
+2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#generate-a-url-link). 
 
 ##### Using Tableau Server
 
 1. Follow the "**Use a WDC in Tableau Server**“ found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
 
-2. When adding a new data source -> Web Data Connector please use the URL you generated in the previous section.
+2. When adding a new data source -> Web Data Connector please use the URL you generated in the [previous section](#generate-a-url-link).
 
 ### Troubleshooting
 
