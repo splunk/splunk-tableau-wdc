@@ -141,7 +141,7 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
     
     b. Click "**Generate Link**"
     
-    c. Click inside the "Copy Link to Tableau WDC" and copy the URL.  It will be used in next step.
+    c. Click inside the "Copy Link to Tableau WDC" and copy the URL.  Copied link will be used in next step.
 
 	![image alt text](screenshots/2-select-search-and-generate-wdc-link.png)
 
@@ -177,13 +177,13 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 #### Push Splunk Data into Tableau with Splunk Tableau WDC
 
-##### Using Tableau Desktop
+##### Using Tableau Desktop :desktop_computer:
 
 1. Follow the "**Use a WDC in Tableau Desktop**" instructions found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_tableau).
 
 2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#using-the-splunk-tableau-wdc). 
 
-##### Using Tableau Server
+##### Using Tableau Server :cloud:
 
 1. Follow the "**Use a WDC in Tableau Server**“ found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
 
