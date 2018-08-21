@@ -113,7 +113,7 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker!
 
-    1. Download [Docker :whale:](https://www.docker.com/get-started)
+    1. Download and Install [Docker :whale:](https://www.docker.com/get-started)
 
     2. Pull docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
 
