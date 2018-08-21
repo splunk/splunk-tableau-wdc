@@ -1,10 +1,12 @@
 # Splunk Tableau Web Data Connector
 
+A web data connector for Tableau to help you connect with Splunk data.
 
-## Try it
 
-* [WDC Home](https://tableau-wdc.splunk.link/splunk-tableau-wdc/src/splunkConnector.html)
+## Try it ↙
+* An online version of the Tableau Web Data Connector for Splunk can be found here:  [:satellite: Splunk WDC Home](https://tableau-wdc.splunk.link/splunk-tableau-wdc/src/splunkConnector.html) 
 * [WDC Simulator](https://tableau-wdc.splunk.link/Simulator/index.html)
+
 
 ---
 ## Building the Splunk Tableau Data Connector
@@ -286,3 +288,12 @@ Note: Some external images and excerpts come from:
 * Mayur Pipaliya
 * Karthika Krishnan
 * Joe Welsh
+
+## EOF :checkered_flag:
+
+* **Love :heart: it?** Tell this little bird over at [`@splunk`](https://twitter.com/splunk) or email us at  [`fdse [@] s p l u n k {.} C O M`](mailto:fdse@splunk.com?subject=[Splunk-TableauWDC]%20Hi%20there!) and we'll be thrilled.
+
+* Want to **contribute**? Great! Feel free to create a [PR](https://github.com/splunk/splunk-tableau-wdc/pulls).
+
+* **Found a :bug: bug?** [Open an issue](https://github.com/splunk/splunk-tableau-wdc/issues/new) with some [emojis](http://emoji.muan.co). Issues without emojis are not valid. :trollface:
+
