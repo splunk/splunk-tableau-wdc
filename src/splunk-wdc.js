@@ -36,7 +36,7 @@
 
     // Using /proxy to bypass CORS and SSL validation
     // var http           = new splunkjs.JQueryHttp();
-    var http            = new splunkjs.ProxyHttp("https://tableau-wdc.splunk.link/proxy");
+    var http            = new splunkjs.ProxyHttp("/proxy");
     var service         = new splunkjs.Service(http, auth);
 
     // Populate UI
