@@ -3,33 +3,35 @@
 A web data connector for Tableau to help you connect with Splunk data.
 
 ## Table of Contents
-* [Try it](https://github.com/splunk/splunk-tableau-wdc#try-it-)
-* [Building the Splunk Tableau Data Connector](https://github.com/splunk/splunk-tableau-wdc#building-the-splunk-tableau-data-connector)
-    * [Configuring your Splunk Search Head](https://github.com/splunk/splunk-tableau-wdc#configuring-your-splunk-search-head)
-        * [Prerequisites](https://github.com/splunk/splunk-tableau-wdc#prerequisites)
-    * [Splunk Tableau Web Data Connector](https://github.com/splunk/splunk-tableau-wdc#splunk-tableau-web-data-connector-1)
-        * [Prerequisites](https://github.com/splunk/splunk-tableau-wdc#prerequisites-1)
-        * [Deploying Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc#deploying-splunk-tableau-wdc)
-        * [Configuring and Testing Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc#configuring-and-testing-splunk-tableau-wdc)
-* [Usage](https://github.com/splunk/splunk-tableau-wdc#usage)
-    * [With Tableau Desktop](https://github.com/splunk/splunk-tableau-wdc#with-tableau-desktop-desktop_computer)
-    * [With Tableau Server](https://github.com/splunk/splunk-tableau-wdc#with-tableau-server-cloud)
-* [Troubleshooting](https://github.com/splunk/splunk-tableau-wdc#troubleshooting)
-    * [Run the WDC via Simulator and enable Browser console](https://github.com/splunk/splunk-tableau-wdc#run-the-wdc-via-simulator-and-enable-browser-console)
-        * [Chrome](https://github.com/splunk/splunk-tableau-wdc#chrome)
-        * [Firefox](https://github.com/splunk/splunk-tableau-wdc#firefox)
-        * [IE9,IE10,IE11,Edge](https://github.com/splunk/splunk-tableau-wdc#ie9-ie10-ie11-edge)
-        * [Opera](https://github.com/splunk/splunk-tableau-wdc#opera)
-        * [Safari](https://github.com/splunk/splunk-tableau-wdc#safari)
-    * [Initialise Tableau Desktop in Debug Mode (slower)](https://github.com/splunk/splunk-tableau-wdc#initialise-tableau-desktop-in-debug-mode-slower)
-    * [Verify SSL validity](https://github.com/splunk/splunk-tableau-wdc#verify-ssl-validity)
-    * [WDC Deployment to Tableau Server: Whitelisting](https://github.com/splunk/splunk-tableau-wdc#wdc-deployment-to-tableau-server-whitelisting)
-* [Appendix](https://github.com/splunk/splunk-tableau-wdc#appendix)
-    * [Enable CORS Connections on Splunk](https://github.com/splunk/splunk-tableau-wdc#enable-cors-connections-on-splunk)
-    * [Enable Valid SSL Certificate on Splunk Management Port (8089)](https://github.com/splunk/splunk-tableau-wdc#enable-valid-ssl-certificate-on-splunk-management-port-8089)
-* [References](https://github.com/splunk/splunk-tableau-wdc#references)
-* [Contributors](https://github.com/splunk/splunk-tableau-wdc#contributors)
-* [EOF](https://github.com/splunk/splunk-tableau-wdc#eof-checkered_flag)
+* [Try it](#try-it-)
+* [Building the Splunk Tableau Data Connector](#building-the-splunk-tableau-data-connector)
+    * [Configuring your Splunk Search Head](#configuring-your-splunk-search-head)
+        * [Prerequisites](#prerequisites)
+    * [Splunk Tableau Web Data Connector](#splunk-tableau-web-data-connector-1)
+        * [Prerequisites](#prerequisites-1)
+        * [Deploying Splunk Tableau WDC](#deploying-splunk-tableau-wdc)
+            * [Deploying Splunk Tableau WDC using Docker](#deploying-splunk-tableau-wdc-using-docker-recommended)
+            * [Deploying Splunk Tableau WDC to Traditional Web Server](#deploying-splunk-tableau-wdc-to-traditional-web-server)
+        * [Configuring and Testing Splunk Tableau WDC](#configuring-and-testing-splunk-tableau-wdc)
+* [Usage](#usage)
+    * [With Tableau Desktop](#with-tableau-desktop-desktop_computer)
+    * [With Tableau Server](#with-tableau-server-cloud)
+* [Troubleshooting](#troubleshooting)
+    * [Run the WDC via Simulator and enable Browser console](#run-the-wdc-via-simulator-and-enable-browser-console)
+        * [Chrome](#chrome)
+        * [Firefox](#firefox)
+        * [IE9,IE10,IE11,Edge](#ie9-ie10-ie11-edge)
+        * [Opera](#opera)
+        * [Safari](#safari)
+    * [Initialise Tableau Desktop in Debug Mode (slower)](#initialise-tableau-desktop-in-debug-mode-slower)
+    * [Verify SSL validity](#verify-ssl-validity)
+    * [WDC Deployment to Tableau Server: Whitelisting](#wdc-deployment-to-tableau-server-whitelisting)
+* [Appendix](#appendix)
+    * [Enable CORS Connections on Splunk](#enable-cors-connections-on-splunk)
+    * [Enable Valid SSL Certificate on Splunk Management Port (8089)](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
+* [References](#references)
+* [Contributors](#contributors)
+* [EOF](#eof-checkered_flag)
 
 ---
 
@@ -48,7 +50,7 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 2. Use **ngrok** to temporarily expose Internal Splunk Instance via command `$ ngrok tcp sh.internal.example.com:8089`. Learn more about **ngrok** at [https://ngrok.com](https://ngrok.com)
 
-3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, this solution can be [deployed](#deploying-splunk-tableau-wdc-to-a-web-server) within the internal network where both Tableau and Splunk can access the WDC Connector.
+3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, [this solution](#deploying-splunk-tableau-wdc-to-traditional-web-server) can be deployed within the internal network where both Tableau and Splunk can access the WDC Connector.
 
 ### Splunk Tableau Web Data Connector
 
@@ -69,32 +71,32 @@ Tableau has a prerequisite to define a dataset's "schema" before it will accept 
 #### Deploying Splunk Tableau WDC
 Choose one of the following options for deploying the Splunk Tableau WDC.
 
-1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker [Recommended]
+##### Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker [Recommended]
 
-    a. **Download** and **Install** [Docker :whale:](https://www.docker.com/get-started)
+a. **Download** and **Install** [Docker :whale:](https://www.docker.com/get-started)
 
-    b. In Terminal (Console)
+b. In Terminal (Console)
 
-    * **Verify** that the docker is installed: `docker -v`
-    * **Pull** docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
-    * **Run** docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
+  * **Verify** that the docker is installed: `docker -v`
+  * **Pull** docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
+  * **Run** docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
 
-    c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
+c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
 
-    > **Note:** Though `localhost` is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance.
+> **Note:** Though `localhost` is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance.
 
-2. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to **Traditional Web Server**
+##### Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to **Traditional Web Server**
 
-    a. Install Source Files on Web Server
+a. Install Source Files on Web Server
 
-    * Download the Github repo: https://github.com/splunk/splunk-tableau-wdc.git
-    * Move the contents of the directory `splunk-tableau-wdc/src/` to the configured directory on web server.
-    * Ensure that you can connect to `http://localhost/splunkConnector.html?proxy=disabled` with a browser with the appropriate URL and required URI Path
+  * Download the Github repo: https://github.com/splunk/splunk-tableau-wdc.git
+  * Move the contents of the directory `splunk-tableau-wdc/src/` to the configured directory on web server.
+  * Ensure that you can connect to `http://localhost/splunkConnector.html?proxy=disabled` with a browser with the appropriate URL and required URI Path
 
-    b. Prepare the Splunk Search Head
+b. Prepare the Splunk Search Head
 
-    * Enable Cross-Origin Resource Sharing (CORS) [Appendix A](#enable-cors-connections-on-splunk)
-    * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
+  * Enable Cross-Origin Resource Sharing (CORS) [Appendix A](#enable-cors-connections-on-splunk)
+  * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
 
 
 
