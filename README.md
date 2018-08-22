@@ -10,8 +10,8 @@ A web data connector for Tableau to help you connect with Splunk data.
     * [Splunk Tableau Web Data Connector](#splunk-tableau-web-data-connector-1)
         * [Prerequisites](#prerequisites-1)
         * [Deploying Splunk Tableau WDC](#deploying-splunk-tableau-wdc)
-            * [Deploying Splunk Tableau WDC using Docker](#deploying-splunk-tableau-wdc-using-docker-recommended)
-            * [Deploying Splunk Tableau WDC to Traditional Web Server](#deploying-splunk-tableau-wdc-to-traditional-web-server)
+            * [Using Docker](#using-docker-recommended)
+            * [To A Traditional Web Server](#to-a-traditional-web-server)
         * [Configuring and Testing Splunk Tableau WDC](#configuring-and-testing-splunk-tableau-wdc)
 * [Usage](#usage)
     * [With Tableau Desktop](#with-tableau-desktop-desktop_computer)
@@ -50,13 +50,13 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 2. Use **ngrok** to temporarily expose Internal Splunk Instance via command `$ ngrok tcp sh.internal.example.com:8089`. Learn more about **ngrok** at [https://ngrok.com](https://ngrok.com)
 
-3. **Deploy solution internally:** For circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, [this solution](#deploying-splunk-tableau-wdc-to-traditional-web-server) can be deployed within the internal network where both Tableau and Splunk can access the WDC Connector.
+3. **Deploy solution internally:** for circumstances where **Search Head CAN NOT be exposed** **to** **the** **Internet**, [this solution](#to-traditional-web-server) can be deployed within the internal network where both Tableau and Splunk can access the WDC Connector.
 
 ### Splunk Tableau Web Data Connector
 
 Tableau has a wonderful [tutorial](https://tableau.github.io/webdataconnector/docs/wdc_tutorial.html) that covers how to create Web Data Connectors (WDC).  Instead of building your own to use with Splunk the Forward Deployed Software Engineering (FDSE) at Splunk has created [the Splunk Tableau WDC](https://tableau-wdc.splunk.link/) which you can immediately use.
 
-Tableau has a prerequisite to define a dataset's "schema" before it will accept it.  So instead of having to manually add a schema to the underlying WDC's JavaScript every possible Splunk search (SPL),  the Splunk Tableau WDC has the additional functionality to:
+Tableau has a prerequisite to define a dataset's "schema" before it will accept it.  So instead of having to manually add a schema to the underlying WDC's JavaScript every possible Splunk search (SPL), the Splunk Tableau WDC has the additional functionality to:
 
 * Determine the schema for any resulting Splunk search's result set **AND**
 
@@ -66,12 +66,12 @@ Tableau has a prerequisite to define a dataset's "schema" before it will accept 
 
 * The Splunk Tableau WDC will require network accessibility to the Splunk Search Head
 
-* The WDC needs to run on a dedicated web server OR inside [Tableau Server](https://onlinehelp.tableau.com/current/server/en-us/datasource_wdc.htm)
+* The WDC needs to run on a dedicated web server
 
 #### Deploying Splunk Tableau WDC
 Choose one of the following options for deploying the Splunk Tableau WDC.
 
-##### Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker [Recommended]
+##### Using Docker [Recommended]
 
 a. **Download** and **Install** [Docker :whale:](https://www.docker.com/get-started)
 
@@ -85,7 +85,7 @@ c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a 
 
 > **Note:** Though `localhost` is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance.
 
-##### Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to **Traditional Web Server**
+##### To A Traditional Web Server
 
 a. Install Source Files on Web Server
 
@@ -96,7 +96,7 @@ a. Install Source Files on Web Server
 b. Prepare the Splunk Search Head
 
   * Enable Cross-Origin Resource Sharing (CORS) [Appendix A](#enable-cors-connections-on-splunk)
-  * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
+  * Splunk Management port 8089 enables SSL by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
 
 
 
@@ -247,7 +247,7 @@ From Powershell (Win):
 
 ### Enable CORS Connections on Splunk
 
-Edit `$SPLUNK_HOME/etc/system/local/server.conf` configuration file as reported below, then restart Splunk.
+Edit `$SPLUNK_HOME/etc/system/local/server.conf` configuration file as shown below ([more details](http://docs.splunk.com/Documentation/Splunk/latest/Admin/Serverconf)), then restart Splunk.
 
 ```
 [httpServer]
