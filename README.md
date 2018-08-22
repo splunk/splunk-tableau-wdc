@@ -2,18 +2,47 @@
 
 A web data connector for Tableau to help you connect with Splunk data.
 
+## Table of Contents
+* [Try it](https://github.com/splunk/splunk-tableau-wdc#try-it-)
+* [Building the Splunk Tableau Data Connector](https://github.com/splunk/splunk-tableau-wdc#building-the-splunk-tableau-data-connector)
+    * [Configuring your Splunk Search Head](https://github.com/splunk/splunk-tableau-wdc#configuring-your-splunk-search-head)
+        * [Prerequisites](https://github.com/splunk/splunk-tableau-wdc#prerequisites)
+    * [Splunk Tableau Web Data Connector](https://github.com/splunk/splunk-tableau-wdc#splunk-tableau-web-data-connector-1)
+        * [Prerequisites](https://github.com/splunk/splunk-tableau-wdc#prerequisites-1)
+        * [Deploying Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc#deploying-splunk-tableau-wdc)
+        * [Configuring and Testing Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc#configuring-and-testing-splunk-tableau-wdc)
+* [Usage](https://github.com/splunk/splunk-tableau-wdc#usage)
+    * [With Tableau Desktop](https://github.com/splunk/splunk-tableau-wdc#with-tableau-desktop-desktop_computer)
+    * [With Tableau Server](https://github.com/splunk/splunk-tableau-wdc#with-tableau-server-cloud)
+* [Troubleshooting](https://github.com/splunk/splunk-tableau-wdc#troubleshooting)
+    * [Run the WDC via Simulator and enable Browser console](https://github.com/splunk/splunk-tableau-wdc#run-the-wdc-via-simulator-and-enable-browser-console)
+        * [Chrome](https://github.com/splunk/splunk-tableau-wdc#chrome)
+        * [Firefox](https://github.com/splunk/splunk-tableau-wdc#firefox)
+        * [IE9,IE10,IE11,Edge](https://github.com/splunk/splunk-tableau-wdc#ie9-ie10-ie11-edge)
+        * [Opera](https://github.com/splunk/splunk-tableau-wdc#opera)
+        * [Safari](https://github.com/splunk/splunk-tableau-wdc#safari)
+    * [Initialise Tableau Desktop in Debug Mode (slower)](https://github.com/splunk/splunk-tableau-wdc#initialise-tableau-desktop-in-debug-mode-slower)
+    * [Verify SSL validity](https://github.com/splunk/splunk-tableau-wdc#verify-ssl-validity)
+    * [WDC Deployment to Tableau Server: Whitelisting](https://github.com/splunk/splunk-tableau-wdc#wdc-deployment-to-tableau-server-whitelisting)
+* [Appendix](https://github.com/splunk/splunk-tableau-wdc#appendix)
+    * [Enable CORS Connections on Splunk](https://github.com/splunk/splunk-tableau-wdc#enable-cors-connections-on-splunk)
+    * [Enable Valid SSL Certificate on Splunk Management Port (8089)](https://github.com/splunk/splunk-tableau-wdc#enable-valid-ssl-certificate-on-splunk-management-port-8089)
+* [References](https://github.com/splunk/splunk-tableau-wdc#references)
+* [Contributors](https://github.com/splunk/splunk-tableau-wdc#contributors)
+* [EOF](https://github.com/splunk/splunk-tableau-wdc#eof-checkered_flag)
+
+---
 
 ## Try it ↙
 * An online version of the Tableau Web Data Connector for Splunk can be found here:  [:satellite: Splunk WDC Home](https://tableau-wdc.splunk.link/src/splunkConnector.html)
 * [WDC Simulator](https://tableau-wdc.splunk.link/Simulator/index.html)
 
 
----
 ## Building the Splunk Tableau Data Connector
 
 ### Configuring Your Splunk Search Head
 
-#### Summary of Prerequisites
+#### Prerequisites
 
 1. Splunk search head management port must be exposed to the internet for the connector to retrieve data.
 
@@ -23,68 +52,69 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 ### Splunk Tableau Web Data Connector
 
-Tableau has a wonderful [tutorial](https://tableau.github.io/webdataconnector/docs/wdc_tutorial.html) that covers how to create Web Data Connectors (WDC).  Instead of building your own to use with Splunk the Forward Deployed Software Engineering (FDSE) at Splunk has created [the Splunk Tableau WDC](https://tableau-wdc.splunk.link/) which you can immediately use.  
+Tableau has a wonderful [tutorial](https://tableau.github.io/webdataconnector/docs/wdc_tutorial.html) that covers how to create Web Data Connectors (WDC).  Instead of building your own to use with Splunk the Forward Deployed Software Engineering (FDSE) at Splunk has created [the Splunk Tableau WDC](https://tableau-wdc.splunk.link/) which you can immediately use.
 
-Tableau has a prerequisite to define a dataset’s "schema" before it will accept it.  So instead of having to manually add a schema to the underlying WDC’s JavaScript every possible Splunk search (SPL),  the Splunk Tableau WDC has the additional functionality to:
+Tableau has a prerequisite to define a dataset's "schema" before it will accept it.  So instead of having to manually add a schema to the underlying WDC's JavaScript every possible Splunk search (SPL),  the Splunk Tableau WDC has the additional functionality to:
 
-1. Determine the schema for any resulting Splunk search’s result set **AND**
+* Determine the schema for any resulting Splunk search's result set **AND**
 
-2. Provide you a properly formatted URL to use with the Splunk Tableau WDC that contains both your search and required schema.
+* Provide you a properly formatted URL to use with the Splunk Tableau WDC that contains both your search and required schema.
 
-#### Prerequisites for Employing Splunk Tableau WDC
+#### Prerequisites
 
 * The Splunk Tableau WDC will require network accessibility to the Splunk Search Head
 
 * The WDC needs to run on a dedicated web server OR inside [Tableau Server](https://onlinehelp.tableau.com/current/server/en-us/datasource_wdc.htm)
 
-#### Deploying Splunk Tableau WDC to a Web Server
+#### Deploying Splunk Tableau WDC
+Choose one of the following options for deploying the Splunk Tableau WDC.
 
 1. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) using Docker [Recommended]
 
     a. **Download** and **Install** [Docker :whale:](https://www.docker.com/get-started)
 
     b. In Terminal (Console)
-    
+
     * **Verify** that the docker is installed: `docker -v`
     * **Pull** docker image locally: `docker pull teamfdse/splunk-tableau-wdc`
     * **Run** docker image :package:: `docker run -t -i -p 80:80 teamfdse/splunk-tableau-wdc:latest`
 
     c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a browser.
-    
-    **Note:** Though localhost is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance. 
-    
+
+    > **Note:** Though `localhost` is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance.
+
 2. Deploying [Splunk Tableau WDC](https://github.com/splunk/splunk-tableau-wdc) to **Traditional Web Server**
 
     a. Install Source Files on Web Server
-    
+
     * Download the Github repo: https://github.com/splunk/splunk-tableau-wdc.git
     * Move the contents of the directory `splunk-tableau-wdc/src/` to the configured directory on web server.
     * Ensure that you can connect to `http://localhost/splunkConnector.html?proxy=disabled` with a browser with the appropriate URL and required URI Path
-    
+
     b. Prepare the Splunk Search Head
-    
+
     * Enable Cross-Origin Resource Sharing (CORS) [Appendix A](#enable-cors-connections-on-splunk)
     * Splunk Management port 8089 is SSL enables by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
-    
+
 
 
 #### Configuring and Testing Splunk Tableau WDC
 
 1. Configure Splunk Search Head Connection
 
-    1. Open the Splunk Tableau Web Data Connector (splunkConnector.html) in your web browser.
+    a. Open the Splunk Tableau Web Data Connector (`splunkConnector.html`) in your web browser.
 
-    2. Enter the following Splunk instance search head details: **hostname**, **management port** (if different than default of 8089) and **protocol** (if different than SSL enabled https).
+    b. Enter the following Splunk instance search head details: **hostname**, **management port** (if different than default of 8089) and **protocol** (if different than SSL enabled `https`).
 
-    3. Enter the Splunk **username** and **password**
+    c. Enter the Splunk **username** and **password**
 
-    4. Press "**Test Connection**"
+    d. Press "**Test Connection**"
 
-		![image alt text](screenshots/1-test-splunk-connectivity.png)
+    ![image alt text](screenshots/1-test-splunk-connectivity.png)
 
 2. Generate a URL Link to Use With Splunk Tableau WDC from within Tableau
 
-    a. Select a Saved Search from the "**Saved Search**" dropdown OR enter a custom search inside “**Custom SPL**”
+    a. Select a Saved Search from the "**Saved Search**" dropdown OR enter a custom search inside "**Custom SPL**"
 
     b. Click "**Generate Link**"
 
@@ -94,7 +124,9 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 3. Test Generated URL Inside Tableau Simulator (Optional)
 
-* Note: You’ll need the URL from "Copy link to Tableau WDC" from previous step.  You can install your [own instance of Tableau Simulator](https://tableau.github.io/webdataconnector/docs/#run-the-simulator) OR test with [FDSE’s instance](https://tableau-wdc.splunk.link/Simulator/index.html) using the following steps:
+    > **Note:** You’ll need the URL from "Copy link to Tableau WDC" from previous step.  
+
+    You can install your [own instance of Tableau Simulator](https://tableau.github.io/webdataconnector/docs/#run-the-simulator) OR test with [FDSE's instance](https://tableau-wdc.splunk.link/Simulator/index.html) using the following steps:
 
     a. Paste the **URL** from the previous step
 
@@ -106,7 +138,7 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
     ![image alt text](screenshots/4-wdc-link-page-preview.png)
 
-    d. Go back to the previous Simulator Window, please wait until data appears in the Table section at the bottom of the page.  
+    d. Go back to the previous Simulator Window, please wait until data appears in the Table section at the bottom of the page.
 
     e. Press "**Fetch Data**"
 
@@ -118,25 +150,25 @@ Tableau has a prerequisite to define a dataset’s "schema" before it will accep
 
 4. Tips and Tricks
 
-    a. If you require a timeframe for custom SPL execution, use the [search time modifiers](https://docs.splunk.com/Documentation/Splunk/7.1.2/SearchReference/SearchTimeModifiers) such as "**daysago**",  “**earliest**” and “**latest**” fields to generate relevant data.
+    * If you require a timeframe for custom SPL execution, use the [search time modifiers](https://docs.splunk.com/Documentation/Splunk/7.1.2/SearchReference/SearchTimeModifiers) such as "**daysago**",  "**earliest**" and "**latest**" fields to generate relevant data.
 
-    b. Not specifying the "[table](http://docs.splunk.com/Documentation/Splunk/7.1.2/SearchReference/Table)" command in your SPL, would yield all metadata for the SPL.
+    * Not specifying the "[table](http://docs.splunk.com/Documentation/Splunk/7.1.2/SearchReference/Table)" command in your SPL, would yield all metadata for the SPL.
 
-#### Using Splunk Tableau WDC As Data Source in Tableau
+## Usage
 
-##### With Tableau Desktop :desktop_computer:
+#### With Tableau Desktop :desktop_computer:
 
 1. Follow the "**Use a WDC in Tableau Desktop**" instructions found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_tableau).
 
 2. For Step 2, enter the URL you generated with the Splunk Tableau WDC from [previous section](#configuring-and-testing-splunk-tableau-wdc).
 
-##### With Tableau Server :cloud:
+#### With Tableau Server :cloud:
 
-1. Follow the "**Use a WDC in Tableau Server**“ found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
+1. Follow the "**Use a WDC in Tableau Server**" found [here](https://tableau.github.io/webdataconnector/docs/wdc_use_in_server).
 
 2. When adding a new data source -> Web Data Connector please use the URL you generated in the [previous section](#configuring-and-testing-splunk-tableau-wdc).
 
-### Troubleshooting
+## Troubleshooting
 
 #### Run the WDC via Simulator and enable Browser console
 
