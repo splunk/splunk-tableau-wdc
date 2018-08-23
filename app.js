@@ -1,9 +1,14 @@
 // Node Web Server with /proxy
 
 var replace = require("replace");
-
+var debug = false;
 // Change root
-console.log("[-] Making current directory as root handler.")
+
+function log(message){
+  if(debug == true) console.log(message);
+}
+
+log("[-] INFO: Making current directory as root handler.")
 replace({
     regex: '__dirname, ".."',
     replacement: '__dirname, "../../../"',
@@ -13,7 +18,7 @@ replace({
 });
 
 // Change listening port
-console.log("[-] Changing http port from 6969 to 80.")
+log("[-] INFO: Changing http port from 6969 to 80.")
 replace({
     regex: '6969;',
     replacement: '80;',
@@ -23,8 +28,16 @@ replace({
 });
 
 // Run Node Web Server (splunk-sdk)
-console.log("\n[-] Starting Node Web Server");
-console.log("\n[-] Access Splunk Tableau WDC at http://localhost/src/splunkConnector.html \n");
+console.log("\n[-] INFO: Starting Node Web Server");
+console.log("\n[-] NOTICE: Avoid using localhost or 127.0.0.1, so that Tableau can connect with WDC Link.");
+console.log("[-] == To find LAN Interface IP ==");
+console.log("\t[-] For macOS, use $ ifconfig | grep broadcast");
+console.log("\t[-] For Linux, use $ ifconfig | grep Bcast");
+console.log("\t[-] For Windows, use cmd> netstat -r | findstr 0.0.0.0 | find /V link");
+
+
+
+console.log("\n[-] Access Splunk Tableau WDC at <LAN-IP:80>/src/splunkConnector.html \n");
 (function() {
     try {
         require('./node_modules/splunk-sdk/bin/cli');
