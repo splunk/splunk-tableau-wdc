@@ -29,7 +29,8 @@ replace({
 
 // Run Node Web Server (splunk-sdk)
 console.log("\n[-] INFO: Starting Node Web Server");
-console.log("\n[-] NOTICE: Avoid using localhost or 127.0.0.1, so that Tableau can connect with WDC Link.");
+console.log("\n[-] Tip: In a situation where you may want to expose local port to other network, you may use 'ngrok tcp 80' or ssh tunnel");
+console.log("\n[-] Tip: Avoid using localhost or 127.0.0.1, so that Tableau can connect with WDC Link.");
 console.log("[-] == To find LAN Interface IP ==");
 console.log("\t[-] For macOS, use $ ifconfig | grep broadcast");
 console.log("\t[-] For Linux, use $ ifconfig | grep Bcast");
