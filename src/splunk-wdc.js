@@ -17,7 +17,7 @@
                             + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
                             + "";                                           // Build search Query  i.e. "search index=_internal | head 1000 | table host, source, sourcetype, _time"
     }else{
-        var searchQuery     = "search "
+        var searchQuery     = " " // "search "
         + _params[0]
         + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
         + "";
@@ -46,7 +46,7 @@
     // Populate UI
     auth["password"]    = auth["password"].replace(/./g, '*');                   // Mask Password
     $(".input-information").append("[-] <b>Type:</b> " + cName);   // Add Auth
-    $(".input-information").append("\n\r[-] <b>SPL:</b> " + _params[0].replace(/\|/g,"\n\t\|"));             // Add SPL
+    $(".input-information").append("\n\r[-] <b>SPL:</b> " + _params[0].replace(/\|/g,"\n         \|"));             // Add SPL
     $(".input-information").append("\n\r[-] <b>Auth:</b> " + JSON.stringify(auth).replace(/",/g,'",\n\t\t').replace(/({|})/g,"") );   // Add Auth
 
 
@@ -98,7 +98,7 @@
                         log("This job expires in:   " + job.properties().ttl + " seconds");
 
                         // Error Handling: If Search returned 0 result.
-                        if(job.properties().eventCount == 0){
+                        if(job.properties().eventCount == -1){
                             // Add column structure to handle error when Tableau receives response
                             cols.push( { id: "id", alias: "id", dataType: tableau.dataTypeEnum.string } );
                             cols.push( { id: "message", alias: "message", dataType: tableau.dataTypeEnum.string } );

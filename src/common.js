@@ -1,5 +1,5 @@
 // Global Variable
-var _debug = false;
+var _debug = true;
 
 // Handle logs
 function log(message){
@@ -76,5 +76,3 @@ function log(message){
     }
     return out.join("");
   }
-
-  

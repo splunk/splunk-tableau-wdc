@@ -26,12 +26,13 @@ function createServiceInstance() {
     port:     _management_port
   };
 
-  // Create a Service instance
+  // Set Proxy or Direct HTTP Connection
   if(window.location.href.split("?")[1] == "proxy=disabled"){
       var http    = new splunkjs.JQueryHttp();
    }else{
       var http    = new splunkjs.ProxyHttp("/proxy");
    }
+   // Create a Service Instance
    var service    = new splunkjs.Service(http,auth);
   log(service);
   return service;
@@ -107,6 +108,7 @@ $('button[name="sh-test-connection"]').click(function(){
 
 });
 
+  // Should be removed as we do not have next button in UI
   $('button[name="sh-next"]').click(function(){
     $(".nav-link:nth-child(1)").click();
   });
@@ -146,8 +148,8 @@ $('button[name="sh-test-connection"]').click(function(){
 
         // Adds link along with query infromation to  the LinkGen textarea
         $("#linkGen").html(linkGen_base + query_data);
-        $("linkGen").focus();
-        $("linkGen").trigger( "click" );
+        $("#linkGen").focus();
+        $("#linkGen").trigger( "click" );
 
       });
 
@@ -225,6 +227,16 @@ $('button[name="sh-test-connection"]').click(function(){
         $('#SavedSearchDropDown option:selected').attr("title");
       });
 
+      // Trigger actions when user perform certain keypress on user/pass
+      $("input[name='username'], input[name='password']").keypress(function(e) {
+          // On Return/Enter key
+          if(e.which == 13) {
+            // Triger Test Connection
+            $('button[name="sh-test-connection"]').trigger('click');
+          }
+      });
+
+
 
     });
 })();
@@ -254,13 +266,55 @@ function listSavedSearch(service){
         var earliest_time   =   search._properties["dispatch.earliest_time"].replace(/rt/g,"");
         var latest_time     =   search._properties["dispatch.latest_time"].replace(/rt/g,"");
 
-        if(earliest_time) earliest_time = " earliest=" +  earliest_time + " ";
-        if(latest_time)   latest_time = " latest="   +  latest_time + " ";
+        var earliest_spl_for_datamodel = "";
+        var latest_spl_for_datamodel = "";
+
+        // if earliest or latest exists, build SPL
+        if(earliest_time){
+          // For Saved Search with Datamodel
+          earliest_spl_for_datamodel = '  | where _time > relative_time( now(), "' + earliest_time + '")'
+          // For Normal Saved Search
+          earliest_time = " earliest=" +  earliest_time + " ";
+         }
+        if(latest_time){
+          // For Saved Search with Datamodel
+          latest_spl_for_datamodel = '  | where _time < relative_time( now(), "' + latest_time + '")'
+          // For Normal Saved Search
+          latest_time = " latest="   +  latest_time + " ";
+        }
 
         log("Time: " + earliest_time + latest_time)
 
         // Build SPL form saved search and time parameters
-        var _searchSPL = earliest_time + latest_time + search.properties().search;
+        // base search
+        /*
+          String manipulation is necessary to position earliest and latest time at appropriate location.
+          Condition below helps with positioning.
+        */
+        var baseSearch = search.properties().search;
+
+        if(baseSearch.indexOf('datamodel') != -1){
+            log('DATAMODEL Found');
+            var pipes =  (baseSearch.match(/\|/g) || []).length;
+            // When datamodel savedsearch has one pipe
+            if(pipes == 1){
+              // i.e. | datamodel .... | where _time > earliest | where _time < latest
+              _searchSPL = baseSearch + earliest_spl_for_datamodel + latest_spl_for_datamodel;
+            }else if (pipes >= 2) {
+              // When datamodel savedsearch has two or more pipe
+              positionOfPipeAfterDatamodel = baseSearch.indexOf("|", baseSearch.indexOf("datamodel") + 1);
+              n = positionOfPipeAfterDatamodel;
+              _searchSPL = baseSearch.substring(0, n) + earliest_spl_for_datamodel + latest_spl_for_datamodel + baseSearch.substring(n, baseSearch.length);
+            }else{
+              // Default exception
+              _searchSPL = earliest_time + latest_time + baseSearch;
+            }
+        }else{
+            // Default
+            _searchSPL = earliest_time + latest_time + baseSearch;
+        }
+        log("Outcome: " + _searchSPL);
+
         $dropdownSS.append($("<option />").val(search.name).text(search.name).attr( "title", b64EncodeUnicode( _searchSPL )));
 
 
