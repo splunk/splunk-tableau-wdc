@@ -151,7 +151,7 @@
                                             // During the last fetch...
                                             // Extract Column names from first event
                                             // (This phase will help us define schema, rest of the entries in "res/result"  will be processed by getData)
-                                            if(myOffset >  (resultCount-max_record_limit)){
+                                            if(myOffset >=  (resultCount-max_record_limit)){
 
 
                                                 log("Response type: "  + typeof(res));
@@ -216,6 +216,7 @@
             log("Total records: ");
             log(res.length);
             for (var i=0; i<res.length; ++i) {
+                if(i == 0) log(res[i]);
                 tableData.push(res[i]);
             }
             resolve(tableData);
