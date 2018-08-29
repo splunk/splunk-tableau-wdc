@@ -15,3 +15,8 @@ pids
 node_modules/
 jspm_packages/
 
+# Code Snippets
+code_snippets
+
+# Local files
+identify_lan_ip.html

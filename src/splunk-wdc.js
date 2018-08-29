@@ -107,12 +107,14 @@
 
                         // Error Handling: If Search returned 0 result.
                         if(job.properties().eventCount == -1){
+
+                            log(job.properties());
                             // Add column structure to handle error when Tableau receives response
                             cols.push( { id: "id", alias: "id", dataType: tableau.dataTypeEnum.string } );
                             cols.push( { id: "message", alias: "message", dataType: tableau.dataTypeEnum.string } );
                             cols.push( { id: "spl_used", alias: "spl", dataType: tableau.dataTypeEnum.string } );
-
-                            res = [{"id" : "splunkd", "message" : "The number of events: 0", "spl_used" : _params[0]  }]
+                            
+                            res = [{"id" : "splunkd", "message" : "The number of events: 0, try to tweak SPL or check browser console for debugging.", "spl_used" : _params[0]  }]
 
                             // Tableau Column Schema JS SDK Calls...
                             var tableInfo = {
