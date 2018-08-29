@@ -3,8 +3,8 @@
 (function () {
 
     var cols                = [];                                           // Tableau Column definition
-    var res                 = null;                                         // Response Handler
-    var max_record_limit    = 50000;                                        // Max record splunk would return in one go. (max is 50K)
+    var res                 = [];                                           // Response Handler
+    var max_record_limit    = 10000;                                        // Max record splunk would return in one go. (max is 50K)
     var myConnector         = new tableau.makeConnector();                  // Create the connector object
 
     // returns array of SPL Query string and Auth string
@@ -16,8 +16,16 @@
                             + _params[0]
                             + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
                             + "";                                           // Build search Query  i.e. "search index=_internal | head 1000 | table host, source, sourcetype, _time"
-    }else{
-        var searchQuery     = " " // "search "
+                    
+                        
+    }else if(_params[0].indexOf("|") < 4 && _params[0].indexOf("|") != -1 ){
+        var searchQuery     = " "  
+        + _params[0]
+        + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
+        + "";  
+    }
+    else{
+        var searchQuery     = "search " 
         + _params[0]
         + " | fields - _bkt, _cd, _indextime, _si, _sourcetype, _subsecond, linecount, splunk_server "
         + "";
@@ -115,28 +123,85 @@
                             schemaCallback([tableInfo]);
 
                         }else{
-                            // Get the results and display them
-                            job.results({count: max_record_limit, output_mode: "JSON"}, function(err, results) {
-                                // log(results.results);
-                                res = results.results;
-                                // log("Response Length: "  + res.length);
 
-                                // Extract Column names from first event
-                                // (This phase will help us define schema, rest of the entries in "res/result"  will be processed by getData)
-                                Object.keys(res[0]).forEach(function(key) {
-                                    log('Key : ' + key + ', Value : ' + res[0][key]);
-                                    cols.push( { id: key, alias: key, dataType: tableau.dataTypeEnum.string } );
-                                });
+                                // Page through results by looping through sets of 10K at a time
+                                var resultCount = job.properties().resultCount; // Number of results this job returned
+                                var myOffset = 0;                               // Start at result 0
+                                // var max_record_limit;                        // Defined globally, Helps get sets of 10K results at a time
 
-                                // Tableau Column Schema JS SDK Calls...
-                                var tableInfo = {
-                                    id: "splunkFeed",
-                                    alias: cName, // "Splunk Feed Test",
-                                    columns: cols
-                                };
+                                log("aync stats");
+                                // Run an asynchronous while loop using the Async.whilst helper function to
+                                // loop through each set of results 
+                                splunkjs.Async.whilst(
 
-                                schemaCallback([tableInfo]);
-                            });
+                                    // Condition--loop while there are still results to display
+                                    function() {
+                                        return (myOffset < resultCount);
+                                    },
+
+                                    // Body--display each set of results
+                                    function(done) {
+
+                                        // Get the results and display them  {count: max_record_limit,offset:myOffset}
+                                        job.results({count: max_record_limit, offset:myOffset, output_mode: "JSON"}, function(err, results) {
+                                            // log(results.results);
+                                            log("[-] fetching result set");
+                                            //res = ;
+                                            res = res.concat(results.results);
+                                            // During the last fetch...
+                                            // Extract Column names from first event
+                                            // (This phase will help us define schema, rest of the entries in "res/result"  will be processed by getData)
+                                            if(myOffset >  (resultCount-max_record_limit)){
+
+
+                                                log("Response type: "  + typeof(res));
+                                                log("Response[0] type: "  +  typeof(res[0]));
+                                                log("Response[0]: ");
+                                                log(res[0]);
+    
+
+
+                                                log("added colum definition");
+                                                Object.keys(res[0]).forEach(function(key) {
+                                                    log('Key : ' + key + ', Value : ' + res[0][key]);
+                                                    cols.push( { id: key, alias: key, dataType: tableau.dataTypeEnum.string } );
+                                                });
+
+
+                                                log('tableInfo');
+                                                // Tableau Column Schema JS SDK Calls...
+                                                var tableInfo = {
+                                                    id: "splunkFeed",
+                                                    alias: cName, // "Splunk Feed Test",
+                                                    columns: cols
+                                                };
+                                                schemaCallback([tableInfo]);
+                                                log("schemaCallback");
+
+                                            }else{
+                                                log("[-] myoffset:: " + myOffset);
+                                            }
+
+                                            // Increase the offset to get the next set of results
+                                            // once we are done processing the current set.
+                                            log("[-] myOffset: " + myOffset + " | max_record_limit: " + max_record_limit + " | resultCount: " + resultCount);
+                                            myOffset = myOffset + max_record_limit;
+                                            done();
+                                        });
+                                    },
+
+                                    // Done
+                                    function(err){
+                                        if (err) console.log("Error: " + err);
+                                    }
+                                ); // Async Ends
+
+
+
+
+
+
+
                         }
                     });
                 }
@@ -148,7 +213,8 @@
     myConnector.getData = function (table, doneCallback) {
         var fetchSplunkData = new Promise(function(resolve,reject){
             var tableData = [];
-            // log(res.length);
+            log("Total records: ");
+            log(res.length);
             for (var i=0; i<res.length; ++i) {
                 tableData.push(res[i]);
             }
