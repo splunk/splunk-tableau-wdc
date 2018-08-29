@@ -11,9 +11,10 @@ pids
 *.seed
 *.pid.lock
 
-# Dependency directories
+# Dependency directories & file
 node_modules/
 jspm_packages/
+package-lock.json
 
 # Code Snippets
 code_snippets
