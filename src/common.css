@@ -4,6 +4,9 @@ body{
     font-family: 'Ubuntu';
 
 }
+::-moz-selection { background: greenyellow; }
+::selection { background: greenyellow; }
+
 .navbar-brand{
     margin-right: .8rem;
 }
@@ -38,9 +41,7 @@ img.logo {
     padding: 20px;
     box-shadow: 0px 0px 1px #757575;
 }
-.alert {
-    /* margin-top: 2%; */
-}
+
 .well {
     margin-top: 2%;
 }
@@ -87,4 +88,15 @@ img.logo {
     border-radius: 10px;
     margin-top: 20px;
     padding: 20px;
+}
+
+.footer-copyright{
+    background-color: rgba(0, 0, 0, 0.15);
+    color: rgb(255, 255, 255);
+    margin-top: 20px;
+    text-shadow: 1px 1px 11px black;
+    box-shadow: inset -8px 3px 20px 2px #00000036;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
