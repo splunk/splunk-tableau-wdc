@@ -172,6 +172,15 @@ b. Prepare the Splunk Search Head
 
 ## Troubleshooting
 
+#### If you think paging is returning limited events, Increase the response events to more than 500000 events.
+
+* Check for the documentation around  `max_count` at [limits.conf](https://docs.splunk.com/Documentation/Splunk/7.2.0/Admin/Limitsconf)
+```
+[restapi]
+max_count=50000000
+```
+
+
 #### Run the WDC via Simulator and enable Browser console
 
 Useful to debug the WDC. Depending on your browser, enable the developer tools as reported below and select the tab "Console" to monitor WDC log in real-time. Informational messages, warnings (in yellow) and errors (in red) will be listed in this window. The screenshot reported is an example of Firefox console without errors.
