@@ -27,7 +27,7 @@ function createServiceInstance() {
   };
 
   // Set Proxy or Direct HTTP Connection
-  if(window.location.href.split("?")[1] == "proxy=disabled"){
+  if(window.location.href.split("?")[1].includes("proxy=disabled")){
       var http    = new splunkjs.JQueryHttp();
    }else{
       var http    = new splunkjs.ProxyHttp("/proxy");
