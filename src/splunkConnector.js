@@ -27,13 +27,17 @@ function createServiceInstance() {
   };
 
   // Set Proxy or Direct HTTP Connection
-  if(window.location.href.split("?")[1].includes("proxy=disabled")){
-      var http    = new splunkjs.JQueryHttp();
-   }else{
-      var http    = new splunkjs.ProxyHttp("/proxy");
-   }
-   // Create a Service Instance
-   var service    = new splunkjs.Service(http,auth);
+  if(window.location.href.split("?").length > 1)
+    if(window.location.href.split("?")[1].includes("proxy=disabled")){
+        var http    = new splunkjs.JQueryHttp();
+    }else{
+        var http    = new splunkjs.ProxyHttp("/proxy");
+    }
+  else
+    var http    = new splunkjs.ProxyHttp("/proxy");
+
+  // Create a Service Instance
+  var service    = new splunkjs.Service(http,auth);
   log(service);
   return service;
 }
@@ -138,9 +142,9 @@ $('button[name="sh-test-connection"]').click(function(){
         // Add proxy=disabled
         if(window.location.href.split("?")[1] == "proxy=disabled"){
           var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName + delimiter + "proxy=disabled"));
-         }else{
-           var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName));
-         }
+        }else{
+          var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName));
+        }
 
 
         // Show panel depicting with resulting link
@@ -173,9 +177,9 @@ $('button[name="sh-test-connection"]').click(function(){
           // Add proxy=disabled
           if(window.location.href.split("?")[1] == "proxy=disabled"){
             var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  + delimiter + "proxy=disabled" ));
-           }else{
-             var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  ));
-           }
+            }else{
+              var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  ));
+            }
 
           // Show panel depicting with resulting link
           $("#panel-linkGen").addClass("show");
@@ -275,7 +279,7 @@ function listSavedSearch(service){
           earliest_spl_for_datamodel = '  | where _time > relative_time( now(), "' + earliest_time + '")'
           // For Normal Saved Search
           earliest_time = " earliest=" +  earliest_time + " ";
-         }
+        }
         if(latest_time){
           // For Saved Search with Datamodel
           latest_spl_for_datamodel = '  | where _time < relative_time( now(), "' + latest_time + '")'
