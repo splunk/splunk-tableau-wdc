@@ -19,7 +19,7 @@
     "connector"
   ],
   "dependencies": {
-    "replace": "^1.0.0",
+    "replace": "^1.1.0",
     "splunk-sdk": ">= 1.8.4"
   },
   "author": "Team FDSE",

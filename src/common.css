@@ -1,6 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Ubuntu:300);
+@import url(static/css_family_Ubuntu_300);
 body{
-    background: url(https://www.toptal.com/designers/subtlepatterns/patterns/handmadepaper.png);
+    background: url(static/handmadepaper.png);
     font-family: 'Ubuntu';
 
 }
