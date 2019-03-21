@@ -42,7 +42,7 @@
         output_mode: "JSON"
     };
 
-    if(_params[3] == "proxy=disabled"){
+    if(_params[4] == "proxy=disabled"){
       var http           = new splunkjs.JQueryHttp();
     }else{
       // Using /proxy to bypass CORS and SSL validation
@@ -122,6 +122,7 @@
                                 alias: "Message from Splunk Search",
                                 columns: cols
                             };
+
                             schemaCallback([tableInfo]);
 
                         }else{
@@ -177,6 +178,13 @@
                                                     alias: cName, // "Splunk Feed Test",
                                                     columns: cols
                                                 };
+                                                
+                                                // Add incrementColumnId if it exist
+                                                if(typeof (_params[3]) != 'undefined'){
+                                                    tableInfo['incrementColumnId'] = _params[3]
+                                                }
+
+                                                // Send Table Schema Back
                                                 schemaCallback([tableInfo]);
                                                 log("schemaCallback");
 

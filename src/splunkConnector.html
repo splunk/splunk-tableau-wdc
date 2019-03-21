@@ -96,7 +96,7 @@
                     <div class="col-8">
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <label class="input-group-text" for="SavedSearchDropDown">Saved Search</label>
+                          <label class="input-group-text" for="SavedSearchDropDown"><i class="fas fa-search"></i> &nbsp; Saved Search</label>
                         </div>
                         <select class="custom-select" id="SavedSearchDropDown"> <!-- inputGroupSelect01 -->
                           <!-- <option selected>Choose...</option> -->
@@ -108,8 +108,16 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-12">
-                      <button type="button" id="submitButtonSavedSearch" class="btn btn-success"><i class="fab fa-searchengin"></i>&nbsp; Generate a link</button>
+                    <div class="col-sm-12">
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-sort-numeric-up"></i>&nbsp;Incremental Field</span>
+                          </div>
+                          <input type="text" id="incremental_field_SavedSearch" class="form-control" aria-label="Text input with checkbox" placeholder="incremental field name. i.e. _time"  data-toggle="tooltip"  title="incrementColumnId (optional): Pick the Splunk field name which returns unique results to utilize this feature." >
+                      </div>
+                    </div>
+                    <div class="col-sm">
+                      <button type="button" id="submitButtonSavedSearch" class="btn btn-success"><i class="fab fa-searchengin"></i> &nbsp; Generate a link</button>
                     </div>
                   </div>
                 </div>
@@ -129,11 +137,17 @@
                     <div class="col-12">
                       <div class="input-group">
                         <div class="input-group-prepend">
-                          <span class="input-group-text">Custom SPL</span>
+                          <span class="input-group-text"><i class="fas fa-terminal"></i> &nbsp; Custom SPL</span>
                         </div>
                         <textarea class="form-control" id="SPLTextArea" aria-label="Custom SPL" placeholder="i.e. index=_internal | head 10 | table host, source, sourcetype" data-toggle="tooltip" title="Splunk Search Processing Language (SPL)"></textarea>
                       </div>
                       <br />
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-sort-numeric-up"></i> &nbsp; Incremental Field</span>
+                          </div>
+                          <input type="text" id="incremental_field_SPL" class="form-control" aria-label="Text input with checkbox" placeholder="incremental field name. i.e. _time"  data-toggle="tooltip"  title="incrementColumnId (optional): Pick the Splunk field name which returns unique results to utilize this feature." >
+                      </div>
                       <button type="button" id="submitButtonSPL" class="btn btn-success"><i class="fas fa-terminal"></i>&nbsp; Generate a link</button>
                     </div>
                   </div>

@@ -135,15 +135,19 @@ $('button[name="sh-test-connection"]').click(function(){
         // Retrieve value of SavedSearch SPL
         var savedSearchName = $("#SavedSearchDropDown option:selected").val();
         var savedSearchSPL  = $("#SavedSearchDropDown option:selected").attr('title');
+        
+        // Retrieve value of incremental field (if any)
+        var incremental_field_SavedSearch = $("#incremental_field_SavedSearch").val();
+        var uniqField = incremental_field_SavedSearch;
 
         // Generate query parameters :: base64 encoded ( compressed (params))
-        var auth_str        = JSON.stringify(auth);
+        var auth_str          = JSON.stringify(auth);
 
         // Add proxy=disabled
         if(window.location.href.split("?")[1] == "proxy=disabled"){
-          var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName + delimiter + "proxy=disabled"));
+          var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName + delimiter + "proxy=disabled"  + delimiter + uniqField));
         }else{
-          var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName));
+          var query_data      =  b64EncodeUnicode(lzw_encode(b64DecodeUnicode(savedSearchSPL) + delimiter + auth_str + delimiter + savedSearchName + delimiter + uniqField));
         }
 
 
@@ -174,11 +178,15 @@ $('button[name="sh-test-connection"]').click(function(){
           // Generate query parameters :: base64 encoded ( compressed (params))
           var auth_str = JSON.stringify(auth);
 
+        // Retrieve value of incremental field (if any)
+        var incremental_field_SPL = $("#incremental_field_SPL").val();
+        var uniqField = incremental_field_SPL;
+
           // Add proxy=disabled
           if(window.location.href.split("?")[1] == "proxy=disabled"){
-            var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  + delimiter + "proxy=disabled" ));
+            var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  + delimiter + uniqField + delimiter + "proxy=disabled" ));
             }else{
-              var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL"  ));
+              var query_data =  b64EncodeUnicode(lzw_encode(searchQuery + delimiter + auth_str  + delimiter + "Custom SPL" + delimiter + uniqField ));
             }
 
           // Show panel depicting with resulting link
