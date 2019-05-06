@@ -172,6 +172,8 @@ b. Prepare the Splunk Search Head
 
 ## Troubleshooting
 
+#### Ensure that the query you run on the WDC, runs without errors on your Splunk instance. If the query fails on Splunk, Tableau will appear to be running a never ending query and not error out.
+
 #### If you think paging is returning limited events, Increase the response events to more than 500000 events.
 
 * Check for the documentation around  `max_count` at [limits.conf](https://docs.splunk.com/Documentation/Splunk/7.2.0/Admin/Limitsconf)
@@ -179,7 +181,6 @@ b. Prepare the Splunk Search Head
 [restapi]
 max_count=50000000
 ```
-
 
 #### Run the WDC via Simulator and enable Browser console
 
