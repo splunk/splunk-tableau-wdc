@@ -14,17 +14,25 @@ function createServiceInstance() {
   var _host = $('input[name="hostname"]').val();
   var _user = $('input[name="username"]').val();
   var _pass = $('input[name="password"]').val();
+  var _token = $('input[name="token"]').val();
   var _schema = $('#schema option:selected').val();
   var _management_port = $('input[name="management_port"]').val();
 
   // Create auth object
   auth = {
     host: _host,
-    username: _user,
-    password: _pass,
     scheme: _schema,
     port: _management_port
   };
+
+  // Conditionally handle Basic Auth vs Token based Authentication
+  if (_user != undefined && _user != "" && _pass != undefined && _pass != "") {
+    auth.username = _user;
+    auth.password = _pass;
+  } else if (_token != undefined && _token != "") {
+    auth.sessionKey = _token;
+    auth.authorization = "Bearer";
+  }
 
   // Set Proxy or Direct HTTP Connection
   if (window.location.href.split("?").length > 1)
