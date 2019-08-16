@@ -97,7 +97,7 @@ b. Prepare the Splunk Search Head
 
   * Enable Cross-Origin Resource Sharing (CORS) [Appendix A](#enable-cors-connections-on-splunk)
   * Splunk Management port 8089 enables SSL by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
-  * If you want to use token based authentication, please consult the [following](https://docs.splunk.com/Documentation/Splunk/latest/Security/UseAuthTokens)
+  * If you want to use token based authentication, please consult the [following](https://docs.splunk.com/Documentation/Splunk/latest/Security/UseAuthTokens).  To set the token to not expire,  you can leave the expiration box in the Splunk UI blank.
 
 
 
