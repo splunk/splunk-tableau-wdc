@@ -19,6 +19,8 @@
     "connector"
   ],
   "dependencies": {
+    "browserify": "^16.5.0",
+    "mustache": "^3.0.1",
     "replace": "^1.1.0",
     "splunk-sdk": ">= 1.8.4"
   },
