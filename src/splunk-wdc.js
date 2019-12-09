@@ -41,7 +41,7 @@
         output_mode: "JSON"
     };
 
-    if (_params[4] == "proxy=disabled") {
+    if (_params[4] == "proxy=disabled" || _params[3] == "proxy=disabled") {
         var http = new splunkjs.JQueryHttp();
     } else {
         // Using /proxy to bypass CORS and SSL validation
