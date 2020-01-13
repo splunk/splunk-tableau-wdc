@@ -264,7 +264,7 @@ $('button[name="sh-next"]').click(function () {
 // Function to list all the splunk saved searches
 function listSavedSearch(service) {
   // List all saved searches for the current username
-  var mySavedSearches = service.savedSearches();
+  var mySavedSearches = service.savedSearches({sharing: "user", owner: "-", app: "-"});
   mySavedSearches.fetch(function (err, mySavedSearches) {
     var savedSearchColl = mySavedSearches.list();
     var $dropdownSS = $("#SavedSearchDropDown");
