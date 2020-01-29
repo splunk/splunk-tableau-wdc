@@ -349,9 +349,9 @@ Note: Some external images and excerpts come from:
 
 ## Version Supported
 
-- Tableau: Per [wdc_library_versions], Connectors will only be compatible with Tableau 10.0 and later.
+- Tableau: Per [wdc_library_versions](https://tableau.github.io/webdataconnector/docs/wdc_library_versions), Connectors will only be compatible with Tableau 10.0 and later.
 
-- Splunk: 7.x and later.
+- Splunk: Version 7.x and later.
 
 ## Contributors
 
