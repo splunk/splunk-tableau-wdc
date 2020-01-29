@@ -46,7 +46,7 @@ A web data connector for Tableau to help you connect with Splunk data.
 
 #### Prerequisites
 
-1. Splunk search head management port must be exposed to the internet for the connector to retrieve data.
+1. Splunk search head management port (8089) must be exposed to the internet for the connector to retrieve data.
 
 2. Use **ngrok** to temporarily expose Internal Splunk Instance via command `$ ngrok tcp sh.internal.example.com:8089`. Learn more about **ngrok** at [https://ngrok.com](https://ngrok.com)
 
@@ -64,9 +64,10 @@ Tableau has a prerequisite to define a dataset's "schema" before it will accept 
 
 #### Prerequisites
 
-* The Splunk Tableau WDC will require network accessibility to the Splunk Search Head
+* The Splunk Tableau WDC will require network accessibility to the Splunk Search Head (Management Port: 8089)
 
 * The WDC needs to run on a dedicated web server
+
 
 #### Deploying Splunk Tableau WDC
 Choose one of the following options for deploying the Splunk Tableau WDC.
@@ -85,6 +86,8 @@ c. Ensure you can connect to `http://localhost/src/splunkConnector.html` with a 
 
 > **Note:** Though `localhost` is the host in this example, when Docker deploys the image the URL/IP Address will be assigned to that instance.
 
+> **Data Flow**:  `Splunk (Port: 8089) <--> Docker Proxy (Web Port) <--> Tableau Server/Desktop`
+
 ##### To A Traditional Web Server
 
 a. Install Source Files on Web Server
@@ -99,7 +102,9 @@ b. Prepare the Splunk Search Head
   * Splunk Management port 8089 enables SSL by default and encouraged for use. If enabled a valid SSL Certificate must be employed before deploying your connector. [Appendix B](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
   * If you want to use token based authentication, please consult the [following](https://docs.splunk.com/Documentation/Splunk/latest/Security/UseAuthTokens).  To set the token to not expire,  you can leave the expiration box in the Splunk UI blank.
 
+> **Data Flow**:  `Splunk (Port: 8089) <--> Tableau Server/Desktop` 
 
+Though data flows directly from Splunk to Tableau, note that Tableau Server/Desktop should be able to accesss hosted WDC Connector in order to invoke the connectivity
 
 #### Configuring and Testing Splunk Tableau WDC
 
@@ -342,7 +347,11 @@ Note: Some external images and excerpts come from:
 
 * [WDC in Tableau Server](https://onlinehelp.tableau.com/current/server/en-us/datasource_wdc.htm)
 
+## Version Supported
 
+- Tableau: Per [wdc_library_versions], Connectors will only be compatible with Tableau 10.0 and later.
+
+- Splunk: 7.x and later.
 
 ## Contributors
 
