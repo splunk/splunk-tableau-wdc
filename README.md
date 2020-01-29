@@ -113,7 +113,7 @@ b. Prepare the Splunk Search Head
 
     d. Press "**Test Connection**"
 
-    ![image alt text](screenshots/1-test-splunk-connectivity.png)
+    ![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/1-test-splunk-connectivity.png)
 
 2. Generate a URL Link to Use With Splunk Tableau WDC from within Tableau
 
@@ -123,7 +123,7 @@ b. Prepare the Splunk Search Head
 
     c. Click inside the "Copy Link to Tableau WDC" and copy the URL.  Copied link will be used in next step.
 
-	![image alt text](screenshots/2-select-search-and-generate-wdc-link.png)
+	![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/2-select-search-and-generate-wdc-link.png)
 
 3. Test Generated URL Inside Tableau Simulator (Optional)
 
@@ -135,21 +135,21 @@ b. Prepare the Splunk Search Head
 
     b. Press the "**Initialize Connector**" button.
 
-    ![image alt text](screenshots/3-wdc-simulator-to-test-data-retrieved.png)
+    ![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/3-wdc-simulator-to-test-data-retrieved.png)
 
     c. In the pop-up window will appear press the "**Get Splunk Data!**" button
 
-    ![image alt text](screenshots/4-wdc-link-page-preview.png)
+    ![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/4-wdc-link-page-preview.png)
 
     d. Go back to the previous Simulator Window, please wait until data appears in the Table section at the bottom of the page.
 
     e. Press "**Fetch Data**"
 
-    ![image alt text](screenshots/5-wdc-simulator-tables-with-columns.png)
+    ![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/5-wdc-simulator-tables-with-columns.png)
 
     f. If Table Data appears - Congrats! The Splunk Tableau WDC works with the generated URL!  You’re ready to use this WDC to push Splunk data to Tableau.
 
-    ![image alt text](screenshots/6-wdc-simulator-fetched-table-data.png)
+    ![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/6-wdc-simulator-fetched-table-data.png)
 
 4. Tips and Tricks
 
@@ -187,7 +187,7 @@ max_count=50000000
 
 Useful to debug the WDC. Depending on your browser, enable the developer tools as reported below and select the tab "Console" to monitor WDC log in real-time. Informational messages, warnings (in yellow) and errors (in red) will be listed in this window. The screenshot reported is an example of Firefox console without errors.
 
-![image alt text](screenshots/7-wdc-simulator-browser-console.png)
+![image alt text](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/7-wdc-simulator-browser-console.png)
 
 ##### Chrome
 
@@ -237,8 +237,8 @@ Example: `PS C:\Program Files\Tableau\Tableau 2018.2\bin> .\tableau.exe -DDebugW
 
 | Image  | Indication  |
 |---|---|
-| ![invalid ssl](screenshots/8-ssl-certificate-invalid.png)  | The Certificate is NOT valid.   |
-| ![valid ssl](screenshots/9-ssl-certificate-valid.png)    |  The Certificate is valid. |
+| ![invalid ssl](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/8-ssl-certificate-invalid.png)  | The Certificate is NOT valid.   |
+| ![valid ssl](https://raw.githubusercontent.com/splunk/splunk-tableau-wdc/master/screenshots/9-ssl-certificate-valid.png)    |  The Certificate is valid. |
 
 Please note above screenshots have been taken using Chrome, graphics might differ from browser to browser.
 
