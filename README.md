@@ -258,6 +258,7 @@ From Powershell (Win):
 
 * To restart Tableau Server after modifying the safe list, execute: `PS C:\Program Files\Tableau\Tableau Server\10.5\bin> .\tabadmin restart`
 
+
 ## Appendix
 
 
@@ -329,6 +330,16 @@ Before proceeding, please:
 
    * Restart Splunk
 
+
+###  Known Issues in Tableau and Workaround
+
+#### Tableau does not support special character in field name.
+
+> Solution: Use `rename` to rename the field or `eval` to clean the data
+
+#### Tableau parses boolean value (True/False) differently than what we see in Splunk
+
+> Solution: Use `eval` to change the field type from boolean to string. For example: `eval newfield="'".oldfield."'"`
 
 
 ## References
