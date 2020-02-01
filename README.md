@@ -3,35 +3,44 @@
 A web data connector for Tableau to help you connect with Splunk data.
 
 ## Table of Contents
-* [Try it](#try-it-)
-* [Building the Splunk Tableau Data Connector](#building-the-splunk-tableau-data-connector)
-    * [Configuring your Splunk Search Head](#configuring-your-splunk-search-head)
-        * [Prerequisites](#prerequisites)
-    * [Splunk Tableau Web Data Connector](#splunk-tableau-web-data-connector-1)
-        * [Prerequisites](#prerequisites-1)
-        * [Deploying Splunk Tableau WDC](#deploying-splunk-tableau-wdc)
-            * [Using Docker](#using-docker-recommended)
-            * [To A Traditional Web Server](#to-a-traditional-web-server)
-        * [Configuring and Testing Splunk Tableau WDC](#configuring-and-testing-splunk-tableau-wdc)
-* [Usage](#usage)
-    * [With Tableau Desktop](#with-tableau-desktop-desktop_computer)
-    * [With Tableau Server](#with-tableau-server-cloud)
-* [Troubleshooting](#troubleshooting)
-    * [Run the WDC via Simulator and enable Browser console](#run-the-wdc-via-simulator-and-enable-browser-console)
-        * [Chrome](#chrome)
-        * [Firefox](#firefox)
-        * [IE9,IE10,IE11,Edge](#ie9-ie10-ie11-edge)
-        * [Opera](#opera)
-        * [Safari](#safari)
-    * [Initialise Tableau Desktop in Debug Mode (slower)](#initialise-tableau-desktop-in-debug-mode-slower)
-    * [Verify SSL validity](#verify-ssl-validity)
-    * [WDC Deployment to Tableau Server: Whitelisting](#wdc-deployment-to-tableau-server-whitelisting)
-* [Appendix](#appendix)
-    * [Enable CORS Connections on Splunk](#enable-cors-connections-on-splunk)
-    * [Enable Valid SSL Certificate on Splunk Management Port (8089)](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
-* [References](#references)
-* [Contributors](#contributors)
-* [EOF](#eof-checkered_flag)
+- [Splunk Tableau Web Data Connector](#splunk-tableau-web-data-connector)
+  - [Table of Contents](#table-of-contents)
+  - [Try it ↙](#try-it-%e2%86%99)
+  - [Building the Splunk Tableau Data Connector](#building-the-splunk-tableau-data-connector)
+    - [Configuring Your Splunk Search Head](#configuring-your-splunk-search-head)
+      - [Prerequisites](#prerequisites)
+    - [Splunk Tableau Web Data Connector](#splunk-tableau-web-data-connector-1)
+      - [Prerequisites](#prerequisites-1)
+      - [Deploying Splunk Tableau WDC](#deploying-splunk-tableau-wdc)
+        - [Using Docker [Recommended]](#using-docker-recommended)
+        - [To A Traditional Web Server](#to-a-traditional-web-server)
+      - [Configuring and Testing Splunk Tableau WDC](#configuring-and-testing-splunk-tableau-wdc)
+  - [Usage](#usage)
+      - [With Tableau Desktop :desktop_computer:](#with-tableau-desktop-desktopcomputer)
+      - [With Tableau Server :cloud:](#with-tableau-server-cloud)
+  - [Troubleshooting](#troubleshooting)
+      - [Ensure that the query you run on the WDC, runs without errors on your Splunk instance. If the query fails on Splunk, Tableau will appear to be running a never ending query and not error out.](#ensure-that-the-query-you-run-on-the-wdc-runs-without-errors-on-your-splunk-instance-if-the-query-fails-on-splunk-tableau-will-appear-to-be-running-a-never-ending-query-and-not-error-out)
+      - [If you think paging is returning limited events, Increase the response events to more than 500000 events.](#if-you-think-paging-is-returning-limited-events-increase-the-response-events-to-more-than-500000-events)
+      - [Run the WDC via Simulator and enable Browser console](#run-the-wdc-via-simulator-and-enable-browser-console)
+        - [Chrome](#chrome)
+        - [Firefox](#firefox)
+        - [IE9, IE10, IE11, Edge](#ie9-ie10-ie11-edge)
+        - [Opera](#opera)
+        - [Safari](#safari)
+      - [Initialise Tableau Desktop in Debug Mode (slower)](#initialise-tableau-desktop-in-debug-mode-slower)
+      - [Verify SSL validity](#verify-ssl-validity)
+      - [WDC Deployment to Tableau Server: Whitelisting](#wdc-deployment-to-tableau-server-whitelisting)
+  - [Appendix](#appendix)
+    - [Enable CORS Connections on Splunk](#enable-cors-connections-on-splunk)
+    - [Enable Valid SSL Certificate on Splunk Management Port (8089)](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
+    - [Known Issues in Tableau and Workaround](#known-issues-in-tableau-and-workaround)
+      - [What to do if Tableau does not support special character in field name?](#what-to-do-if-tableau-does-not-support-special-character-in-field-name)
+      - [If you are in a situation where Tableau parses boolean, date, float, int values differently than what you see in Splunk.](#if-you-are-in-a-situation-where-tableau-parses-boolean-date-float-int-values-differently-than-what-you-see-in-splunk)
+      - [What if Splunk Search is too long and not working? Tableau's Internet Explorer like WDC Window Supports maximum ~2K characters in as Connector Url length.](#what-if-splunk-search-is-too-long-and-not-working-tableaus-internet-explorer-like-wdc-window-supports-maximum-2k-characters-in-as-connector-url-length)
+  - [References](#references)
+  - [Version Supported](#version-supported)
+  - [Contributors](#contributors)
+  - [EOF :checkered_flag:](#eof-checkeredflag)
 
 ---
 
@@ -333,14 +342,17 @@ Before proceeding, please:
 
 ###  Known Issues in Tableau and Workaround
 
-#### Tableau does not support special character in field name.
+#### What to do if Tableau does not support special character in field name?
 
 > Solution: Use `rename` to rename the field or `eval` to clean the data
 
-#### Tableau parses boolean value (True/False) differently than what we see in Splunk
+#### If you are in a situation where Tableau parses boolean, date, float, int values differently than what you see in Splunk.
 
 > Solution: Use `eval` to change the field type from boolean to string. For example: `eval newfield="'".oldfield."'"`
 
+#### What if Splunk Search is too long and not working? Tableau's Internet Explorer like WDC Window Supports maximum ~2K characters in as Connector Url length.
+
+> Solution: Wrap your bulky search via [macro](https://docs.splunk.com/Documentation/Splunk/8.0.1/Knowledge/Definesearchmacros) and refer to [example of macro](https://docs.splunk.com/Documentation/Splunk/8.0.1/Knowledge/Searchmacroexamples). This shall help shorten the length of Url well within [2K](https://stackoverflow.com/a/417184).
 
 ## References
 
