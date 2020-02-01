@@ -35,7 +35,7 @@ A web data connector for Tableau to help you connect with Splunk data.
     - [Enable Valid SSL Certificate on Splunk Management Port (8089)](#enable-valid-ssl-certificate-on-splunk-management-port-8089)
     - [Known Issues in Tableau and Workaround](#known-issues-in-tableau-and-workaround)
       - [What to do if Tableau does not support special character in field name? ⤵︎](#what-to-do-if-tableau-does-not-support-special-character-in-field-name-%e2%a4%b5%ef%b8%8e)
-      - [If you are in a situation where Tableau parses boolean, date, float, int values differently than what you see in Splunk. ⤵︎](#if-you-are-in-a-situation-where-tableau-parses-boolean-date-float-int-values-differently-than-what-you-see-in-splunk-%e2%a4%b5%ef%b8%8e)
+      - [If you are in a situation where Tableau parses boolean, date, float, int values differently and/or if you observe unreliable results than what you see in Splunk. ⤵︎](#if-you-are-in-a-situation-where-tableau-parses-boolean-date-float-int-values-differently-andor-if-you-observe-unreliable-results-than-what-you-see-in-splunk-%e2%a4%b5%ef%b8%8e)
       - [What if Splunk Search is too long and not working? Tableau's Internet Explorer like WDC Window Supports maximum ~2K characters in as Connector Url length. ⤵︎](#what-if-splunk-search-is-too-long-and-not-working-tableaus-internet-explorer-like-wdc-window-supports-maximum-2k-characters-in-as-connector-url-length-%e2%a4%b5%ef%b8%8e)
   - [References](#references)
   - [Version Supported](#version-supported)
@@ -344,15 +344,19 @@ Before proceeding, please:
 
 #### What to do if Tableau does not support special character in field name? ⤵︎
 
-> Solution: Use [rename](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Rename) to rename the field or [eval](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/eval) to clean the data
+> 💡 Use [rename](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Rename) to rename the field or [eval](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/eval) to clean the data
 
-#### If you are in a situation where Tableau parses boolean, date, float, int values differently than what you see in Splunk. ⤵︎
+#### If you are in a situation where Tableau parses boolean, date, float, int values differently and/or if you observe unreliable results than what you see in Splunk. ⤵︎
 
-> Solution: Use `eval` to change the field type from boolean to string. For example: `eval newfield="'".oldfield."'"`
+> 💡 Use `eval` to change the field type from boolean to string. For example: `eval newfield="'".oldfield."'"`
+
+> 💡 List of [functions](https://help.tableau.com/current/pro/desktop/en-us/functions_all_alphabetical.htm) supported by Tableau.
+
+> 💡 In Tableau, Publish the datasource directly, you may use relevant function in workbook to convert a string into other data type, doing this will not break the scheduled refresh.
 
 #### What if Splunk Search is too long and not working? Tableau's Internet Explorer like WDC Window Supports maximum ~2K characters in as Connector Url length. ⤵︎
 
-> Solution: Wrap your bulky search via [macro](https://docs.splunk.com/Documentation/Splunk/8.0.1/Knowledge/Definesearchmacros) and refer to [example of macro](https://docs.splunk.com/Documentation/Splunk/8.0.1/Knowledge/Searchmacroexamples). This shall help shorten the length of Url well within [2K](https://stackoverflow.com/a/417184).
+> 💡 Wrap your bulky search via [macro](https://docs.splunk.com/Documentation/Splunk/8.0.1/Knowledge/Definesearchmacros) and refer to [example of macro](https://docs.splunk.com/Documentation/Splunk/8.0.1/Knowledge/Searchmacroexamples). This shall help shorten the length of Url well within [2K](https://stackoverflow.com/a/417184).
 
 ## References
 
