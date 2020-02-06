@@ -1,5 +1,5 @@
 // Global Variable
-var _debug = true;
+var _debug = false;
 
 // Handle logs
 function log(message){
