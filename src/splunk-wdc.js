@@ -202,6 +202,8 @@
                                             Object.keys(res[0]).forEach(function (key) {
                                                 log('Key : ' + key + ', Value : ' + res[0][key]);
 
+                                                /*
+                                                // Commented due to RegEx failing for inconsistant data.
                                                 if ( res[0][key].match(/^-?\d+$/) ) {
 
                                                     // Integer column definition (int)
@@ -264,7 +266,13 @@
                                                         alias: key,
                                                         dataType: tableau.dataTypeEnum.string
                                                     });
-                                                }
+                                                }*/
+                                                // All data is String - column definition - User can change the datatype in Tableau.
+                                                cols.push({
+                                                    id: key,
+                                                    alias: key,
+                                                    dataType: tableau.dataTypeEnum.string
+                                                });
                                             }); // End foreach key
 
 
