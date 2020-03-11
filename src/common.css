@@ -53,6 +53,8 @@ img.logo {
 .simulator-link{
   float: right;
   margin: 7px;
+  font-size: 14px;
+  font-family: monospace;
 }
 
 .simulator-link > a{

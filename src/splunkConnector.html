@@ -59,13 +59,14 @@
                 <div class="credentials-icon">
                   <i class="fas fa-unlock fa-3x"></i>
                 </div>
-                <input autocomplete=on type="text" name="username"  class="form-control" aria-label="Username" title="username to access splunk instance" placeholder="Username" value="" aria-describedby="inputGroup-sizing-sm">
-                <input autocomplete=on type="password" name="password"  class="form-control" aria-label="Password" title="password to access splunk instance" placeholder="Password" value="" aria-describedby="inputGroup-sizing-sm">
                 <br />
+                <input autocomplete="on" type="text" name="token" class="form-control" aria-label="Token" title="Token to access splunk instance" placeholder="Token (recommended)" value="" aria-describedby="inputGroup-sizing-sm">
+                <small clas="form-text text-muted"><a href="https://docs.splunk.com/Documentation/Splunk/7.3.1/Security/Setupauthenticationwithtokens">More info about token based authentication</a></small>
                 <center>--- OR ---</center>
                 <br />
-                <input autocomplete="on" type="text" name="token" class="form-control" aria-label="Token" title="Token to access splunk instance" placeholder="Token" value="" aria-describedby="inputGroup-sizing-sm">
-                <small clas="form-text text-muted"><a href="https://docs.splunk.com/Documentation/Splunk/7.3.1/Security/Setupauthenticationwithtokens">More info about token based authentication</a></small>
+                <input autocomplete=on type="text" name="username"  class="form-control" aria-label="Username" title="username to access splunk instance" placeholder="Username" value="" aria-describedby="inputGroup-sizing-sm">
+                <input autocomplete=on type="password" name="password"  class="form-control" aria-label="Password" title="password to access splunk instance" placeholder="Password" value="" aria-describedby="inputGroup-sizing-sm">
+                <small clas="form-text text-muted">By entering the credentials, you understand that the Tableau User can potentially see them in WDC Url.</small>
               </div>
             </div>
           </div>
@@ -167,12 +168,18 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-external-link-alt"></i></span>
                 </div>
-                
                 <textarea name="link" autocomplete="on" class="form-control" id="linkGen" aria-label="Custom SPL" placeholder="NOTE: URL contains encoded (not encrypted) credentails, ensure you share it with trusted person in encrypted network.  [+] Copy link to Tableau WDC"  data-toggle="tooltip" data-placement="top"  data-html="true" title="Click to <em>copy</em>" readonly></textarea>
+                
             </div>
-            <!--
-              <span class="badge badge-info simulator-link"><i class="fas fa-table"></i> Try <a href="./../Simulator/index.html">Simulator</a></span>
-            -->
+            <br />
+            <span class="badge badge-info simulator-link"><a href="./../Simulator/index.html" title="https://github.com/splunk/splunk-tableau-wdc/tree/master/Simulator" target="_blank"><i class="fas fa-table"></i> Try in Simulator</a></span>
+            <br /><br />
+            <!-- cred. sharing/exposure warning -->
+            <div class="alert alert-warning" role="alert">
+                <b>CAUTION:</b> WDC URL contains encoded (not encrypted) credentails, ensure you share it with trusted person in encrypted network.
+            </div>
+            
+            
           </div>
     </div>
 
