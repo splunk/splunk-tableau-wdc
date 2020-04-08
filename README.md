@@ -390,8 +390,6 @@ Note: Some external images and excerpts come from:
 
 ## EOF :checkered_flag:
 
-* **Love :heart: it?** Tell this little bird over at [`@splunk`](https://twitter.com/splunk) or email us at  [`fdse [@] s p l u n k {.} C O M`](mailto:fdse@splunk.com?subject=[Splunk-TableauWDC]%20Hi%20there!) and we'll be thrilled.
-
 * Want to **contribute**? Great! Feel free to create a [PR](https://github.com/splunk/splunk-tableau-wdc/pulls).
 
 * **Found a :bug: bug?** [Open an issue](https://github.com/splunk/splunk-tableau-wdc/issues/new) with some [emojis](http://emoji.muan.co). Issues without emojis are not valid. :trollface:
