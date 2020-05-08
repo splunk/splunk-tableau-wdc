@@ -24,6 +24,9 @@
     "replace": "^1.1.0",
     "splunk-sdk": ">= 1.8.4"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "author": "Team FDSE",
   "license": "ISC",
   "bugs": {

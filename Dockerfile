@@ -1,13 +1,11 @@
-# base image: node
-FROM node:8
+FROM node:latest
 
 # Create app directory
 WORKDIR /usr/src/app
 
-
 # Install app dependencies
 COPY package*.json ./
-RUN npm  install
+RUN npm install
 
 # RUN cd node_modules/splunk-sdk/
 RUN cd node_modules/splunk-sdk/ && pwd && npm install
