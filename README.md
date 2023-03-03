@@ -1,3 +1,9 @@
+## NOTE: ⚠️ This WDC-based solution is sunset in lieu of Splunk's officially supported solution of *Splunk ODBC* drive https://splunkbase.splunk.com/app/1606
+
+## Documentation for ODBC Driver can be found here: https://docs.splunk.com/Documentation/ODBC/latest/UseODBC/AboutSplunkODBCDriver
+
+
+
 # Splunk Tableau Web Data Connector
 
 A web data connector for Tableau to help you connect with Splunk data.
